@@ -90,6 +90,7 @@ function _migrate_upload_lu_wkid($value) {
 /**
  * Lookup common name for species
  * Returns species nid or false if no exact match for an alias.
+ * TODO lookup state name first and if no match then look for common name.
  */
 function _migrate_upload_lu_species_by_name($value, $type = 'any') {
   if ($type == 'common') {
@@ -128,6 +129,5 @@ function _migrate_upload_lu_survey_site_by_xid($value) {
     INNER JOIN {field_data_field_xid} xid ON ( site.vid = xid.revision_id )
     WHERE site.status = 1 AND site.type = \'survey_site\'
     AND xid.field_xid_value = :xid', array(':xid' => $value))->fetchField();
-  }
   return $nid;
 }

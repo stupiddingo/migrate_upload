@@ -66,10 +66,10 @@ class nestMigration extends Migration {
     );
     
     // Human-friendly description of your migration process. 
-    $this->description = t('Import Craters of the Moon observations');
+    $this->description = t('Import Nest observations');
 
     //The Source of the import, where the original data lives.  Upload to observations-import and copy location. (Right-click copy link location)
-    $this->source = new MigrateSourceCSV(DRUPAL_ROOT . '/sites/default/files/data-import/files/2014/12/craters.csv', $columns, array(
+    $this->source = new MigrateSourceCSV(DRUPAL_ROOT . '/sites/default/files/data-import/files/2014/12/nest.csv', $columns, array(
       'delimiter' => ',',
       'header_rows' => 1
     ));

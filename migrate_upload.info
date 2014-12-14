@@ -1,0 +1,7 @@
+name = "Migrate Upload"
+description = "Imports Uploads using Migrate."
+dependencies[] = migrate
+package = Development
+core = 7.x
+files[] = migrate_upload.install
+files[] = nest.inc

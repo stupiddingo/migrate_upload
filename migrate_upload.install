@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * @file
+ * Register/Deregister migrations on Enable/Disable.
+ */
+function migrate_upload_disable() {
+	Migration::deregisterMigration('nest');
+}

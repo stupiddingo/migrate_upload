@@ -1,0 +1,133 @@
+<?php
+/**
+ * Implementation of hook_migrate_api()
+ */
+function migrate_upload_migrate_api() {
+  $api = array(
+    'api' => 2,
+  );
+  return $api;
+}
+
+/**
+ * Removes empty values prior to migrating.
+ * @see http://drupal.org/node/1665332
+ * @see http://drupal.org/node/1792894
+ */
+function _migrate_upload_remove_empties($destination, $entity) {
+  if ($destination instanceof MigrateDestinationEntity) {
+    $entity_type = $destination->getEntityType();
+    $form = $form_state = array();
+    _field_invoke_default('submit', $entity_type, $entity, $form, $form_state);
+  }
+}
+
+/**
+ * Transforms Lat/Lng from web service
+ * Northing: 4641519, easting: 566648, CoordSys: UTM 11N NAD 1983 (WKID:26912)
+ * Request: https://fishandgame.idaho.gov/ifwis/core/tools/reproject/118857.json?cachebuster=39364327&x=566648&y=4641519&inSR=26912&outSR=4326
+ * Return: {"response":"success","msg":"","id":"118857","inx":"566648","iny":"4641519","inSR":"26912","outx":"-110.196217209855","outy":"41.9228161206506","outSR":"4326"}
+ * Inputs lon, lat, 
+ */
+function _migrate_upload_lu_location_wgs($value) {
+  // This web service transforms, cleans and converts (44 30 59N, 116 02 27W -> 44.516389, -116.040833 & 44, 116 -> 44, -116).
+  $url = 'https://fishandgame.idaho.gov/ifwis/core/tools/reproject/'.rand(0,1000000).'.json?x='.$value['lon'].'&y='.$value['lat'].'&inSR='.$value['wkid'].'&outSR=4326';
+  $json = drupal_http_request($url);
+  if ($json->code != 200) {
+    drupal_set_message(t('HTTP error @errorcode occurred when trying to query @remote.', array('@errorcode' => $json->code, '@remote' => $url)), 'error');
+  }
+  else {
+    $geocode_results = drupal_json_decode($json->data);
+    if (isset($geocode_results['response'])) {
+      if ($geocode_results['response'] == 'success') {
+        $lat = $geocode_results['outy'];
+        $lon = $geocode_results['outx'];
+        $input_format = $value['input_format'];
+        $value = array(
+          'lat' => $lat,
+          'lon' => $lon,
+          'input_format' => $input_format,
+        );
+      }
+      else {
+        drupal_set_message(t('Geocoding service reached, but geocoding returned failure for @remote.', array('@remote' => $url)), 'error');
+      }
+    }
+    else {
+      drupal_set_message(t('Geocoding service reached, no error code returned, but no response returned for @remote.', array('@remote' => $url)), 'error');
+    }
+  }
+  return $value;
+}
+
+/**
+ * Lookup for WKID (Well-Known ID) from Coordinate System name.
+ * See http://50.16.242.164/ArcGIS/SDK/REST/pcs.html for full list to add to this list.
+ */
+function _migrate_upload_lu_wkid($value) {
+  $value = strtolower($value);
+  $haystack = array (
+    4326 => 'decimal degrees gcs wgs 1984 (most common)',
+    4759 => 'decimal degrees gcs nad 1983',
+    102605 => 'idaho tm nad 1983',
+    26911 => 'utm zone 11n nad 1983',
+    26912 => 'utm zone 12n nad 1983',
+    26711 => 'utm zone 11n nad 1927',
+    26712 => 'utm zone 12n nad 1927',
+    102269 => 'harn stateplane idaho central fips 1102 nad 1983',
+    102268 => 'harn stateplane idaho east fips 1101 nad 1983',
+    102270 => 'harn stateplane idaho west fips 1103 nad 1983',
+    102669 => 'stateplane idaho central fips 1102 nad 1983',
+    102668 => 'stateplane idaho east fips 1101 nad 1983',
+    102670 => 'stateplane idaho west fips 1103 nad 1983',
+    3857 => 'web mercator wgs 1984 auxiliary sphere',
+  );
+  $wkid = array_search($coordsys, $haystack);
+  if (!$wkid) { $wkid = 4326; } // If null, assume WGS84 DD.
+  return $wkid;
+}
+
+/**
+ * Lookup common name for species
+ * Returns species nid or false if no exact match for an alias.
+ */
+function _migrate_upload_lu_species_by_name($value, $type = 'any') {
+  if ($type == 'common') {
+    $nid = db_query('SELECT nid FROM {node} taxa
+    INNER JOIN {field_data_field_common_name} common ON ( taxa.vid = common.revision_id )
+    WHERE taxa.status = 1 AND taxa.type = \'taxa\'
+    AND common.field_common_name_value = :name', array(':name' => $value))->fetchField();
+  }
+  if ($type == 'scientific') {
+    $nid = db_query('SELECT nid FROM {node} taxa
+    INNER JOIN {field_data_field_scientific_name} scientific ON ( taxa.vid = scientific.revision_id )
+    WHERE taxa.status = 1 AND taxa.type = \'taxa\'
+    AND scientific.field_scientific_name_value = :name', array(':name' => $value))->fetchField();
+  }
+  if ($type == 'any') {
+  $nid = db_query('SELECT nid FROM {node} taxa
+    INNER JOIN {field_data_field_common_name} common ON ( taxa.vid = common.revision_id )
+    WHERE taxa.status = 1 AND taxa.type = \'taxa\'
+    AND common.field_common_name_value = :name', array(':name' => $value))->fetchField();
+    if ($nid == false) {
+      $nid = db_query('SELECT nid FROM {node} taxa
+      INNER JOIN {field_data_field_scientific_name} scientific ON ( taxa.vid = scientific.revision_id )
+      WHERE taxa.status = 1 AND taxa.type = \'taxa\'
+      AND scientific.field_scientific_name_value = :name', array(':name' => $value))->fetchField();
+    }
+  }
+  return $nid;
+}
+
+/**
+ * Lookup SiteID by field_xid (NestID) attached to Survey Site Nodes.
+ * Returns survey site nid or false if no exact match for an alias.
+ */
+function _migrate_upload_lu_survey_site_by_xid($value) {
+    $nid = db_query('SELECT nid FROM {node} site
+    INNER JOIN {field_data_field_xid} xid ON ( site.vid = xid.revision_id )
+    WHERE site.status = 1 AND site.type = \'survey_site\'
+    AND xid.field_xid_value = :xid', array(':xid' => $value))->fetchField();
+  }
+  return $nid;
+}

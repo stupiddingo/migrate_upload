@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * nest_survey_components.features.uuid_term.inc
+ * observation_nest_survey.features.uuid_term.inc
  */
 
 /**
  * Implements hook_uuid_features_default_terms().
  */
-function nest_survey_components_uuid_features_default_terms() {
+function observation_nest_survey_uuid_features_default_terms() {
   $terms = array();
 
   $terms[] = array(

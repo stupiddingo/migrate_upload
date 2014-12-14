@@ -1,14 +1,4228 @@
 <?php
 /**
  * @file
- * nest_survey_components.features.field.inc
+ * observation_nest_survey.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function nest_survey_components_field_default_fields() {
+function observation_nest_survey_field_default_fields() {
   $fields = array();
+
+  // Exported field: 'node-observation-field_address'.
+  $fields['node-observation-field_address'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_address',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'addressfield',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'addressfield',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'addressfield',
+          'settings' => array(
+            'format_handlers' => array(
+              0 => 'address',
+            ),
+            'use_widget_handlers' => 1,
+          ),
+          'type' => 'addressfield_default',
+          'weight' => '26',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_address',
+      'label' => 'Address',
+      'required' => FALSE,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'module' => 'addressfield',
+        'settings' => array(
+          'available_countries' => array(),
+          'format_handlers' => array(
+            0 => 'address',
+          ),
+        ),
+        'type' => 'addressfield_standard',
+        'weight' => '51',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_coreid'.
+  $fields['node-observation-field_coreid'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_coreid',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => TRUE,
+            'scale' => 0,
+            'thousand_separator' => ' ',
+          ),
+          'type' => 'number_integer',
+          'weight' => '46',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_coreid',
+      'label' => 'ObserveDetailID',
+      'required' => 0,
+      'settings' => array(
+        'max' => '',
+        'min' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'number',
+        'settings' => array(),
+        'type' => 'number',
+        'weight' => '62',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_count'.
+  $fields['node-observation-field_count'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_count',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => '1',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'How many did you observe?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => 1,
+            'scale' => 0,
+            'thousand_separator' => ',',
+          ),
+          'type' => 'number_integer',
+          'weight' => '3',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_count',
+      'label' => 'Count',
+      'required' => 1,
+      'settings' => array(
+        'max' => '10000',
+        'min' => '0',
+        'prefix' => '',
+        'suffix' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'number',
+        'settings' => array(),
+        'type' => 'number',
+        'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_count_type'.
+  $fields['node-observation-field_count_type'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_count_type',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Absolute' => 'Absolute',
+          'Estimate' => 'An Estimate',
+          'Minimum' => 'A Minimum',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Absolute',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'This count was...',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '4',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_count_type',
+      'label' => 'Count Type',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '6',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_county'.
+  $fields['node-observation-field_county'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_county',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'county',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => '20',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_county',
+      'label' => 'County',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'options',
+        'settings' => array(
+          'autocomplete_path' => 'taxonomy/autocomplete',
+          'size' => 60,
+        ),
+        'type' => 'options_buttons',
+        'weight' => '10',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_data_entry_notes'.
+  $fields['node-observation-field_data_entry_notes'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_data_entry_notes',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '38',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_data_entry_notes',
+      'label' => 'Data Entry Notes',
+      'required' => FALSE,
+      'settings' => array(
+        'text_processing' => 0,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'module' => 'text',
+        'settings' => array(
+          'rows' => 5,
+        ),
+        'type' => 'text_textarea',
+        'weight' => '59',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_date_confidence'.
+  $fields['node-observation-field_date_confidence'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_date_confidence',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => '86400',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'The selected date/time is accurate within... ',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => 1,
+            'scale' => 0,
+            'thousand_separator' => ',',
+          ),
+          'type' => 'number_integer',
+          'weight' => '21',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_date_confidence',
+      'label' => 'Date/Time Precision',
+      'required' => 1,
+      'settings' => array(
+        'max' => '2147483647',
+        'min' => '0',
+        'prefix' => '±',
+        'suffix' => ' seconds',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'select_or_other',
+        'settings' => array(
+          'apply_chosen' => '',
+          'available_options' => '1|Second
+60|Minute
+3600|Hour
+86400|Day
+604800|Week
+2592000|Month
+7776000|Three Months
+15778440|Six Months
+31557600|Year
+315576000|Decade
+2147483647|> 50 Years',
+          'available_options_php' => '',
+          'markup_available_options_php' => '&lt;none&gt;',
+          'other' => 'Other',
+          'other_size' => '60',
+          'other_title' => 'Please enter an accuracy in seconds (e.g. 1209600 = two weeks)',
+          'other_unknown_defaults' => 'other',
+          'sort_options' => 0,
+        ),
+        'type' => 'select_or_other',
+        'weight' => '50',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_date_notes'.
+  $fields['node-observation-field_date_notes'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_date_notes',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '<p><strong>Optional:</strong> This area is intended to hold any extra information about the date entered. For example, "<em>This observation was likely made during the second week of October, however since I was uncertain I marked that the observation was made at some point between October 1st and October 31st with a low confidence selected.</em>"</p> ',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '23',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_date_notes',
+      'label' => 'Date Notes',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => '4',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '40',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_datetime'.
+  $fields['node-observation-field_datetime'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_datetime',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'date',
+      'settings' => array(
+        'cache_count' => '2',
+        'cache_enabled' => 1,
+        'granularity' => array(
+          'day' => 'day',
+          'hour' => 'hour',
+          'minute' => 'minute',
+          'month' => 'month',
+          'second' => 0,
+          'year' => 'year',
+        ),
+        'timezone_db' => 'UTC',
+        'todate' => 'optional',
+        'tz_handling' => 'date',
+      ),
+      'translatable' => '0',
+      'type' => 'date',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'date',
+          'settings' => array(
+            'format_type' => 'longz',
+            'fromto' => 'both',
+            'multiple_from' => '',
+            'multiple_number' => '',
+            'multiple_to' => '',
+          ),
+          'type' => 'date_default',
+          'weight' => '20',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_datetime',
+      'label' => 'Date Time',
+      'required' => 0,
+      'settings' => array(
+        'default_value' => 'now',
+        'default_value2' => 'same',
+        'default_value_code' => '',
+        'default_value_code2' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'date',
+        'settings' => array(
+          'display_all_day' => 1,
+          'increment' => '1',
+          'input_format' => 'm/d/Y - g:i:sa',
+          'input_format_custom' => '',
+          'label_position' => 'above',
+          'multiple_value_widget' => 'table',
+          'text_parts' => array(),
+          'year_range' => '-10:+0',
+        ),
+        'type' => 'date_popup',
+        'weight' => '49',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_directions'.
+  $fields['node-observation-field_directions'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_directions',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '<p><strong>Optional:</strong> Enter a description of how to get to this location, for example, "<em>From Crouch drive west on the Banks-Lowman Highway then north on Scott Mountain Road for 5.5 miles. Make sure you have spare tires.</em>"</p>',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '14',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_directions',
+      'label' => 'Directions',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => '3',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '8',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_email'.
+  $fields['node-observation-field_email'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_email',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'email',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'email',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'email',
+          'settings' => array(),
+          'type' => 'email_default',
+          'weight' => '27',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_email',
+      'label' => 'Email',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'email',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'email_textfield',
+        'weight' => '50',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_entry_author'.
+  $fields['node-observation-field_entry_author'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_entry_author',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '43',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_entry_author',
+      'label' => 'Entry Author',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '57',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_file'.
+  $fields['node-observation-field_file'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_file',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 1,
+        'display_field' => 1,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'deleted' => '0',
+      'description' => 'If you have any external references, spatial files or documentation for this observation please attach them here.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => '31',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_file',
+      'label' => 'File(s)',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 1,
+        'file_directory' => 'observations/files/[current-date:custom:Y]/[current-date:custom:m]',
+        'file_extensions' => 'pdf ppt pptx doc docx xls xlsx csv kmz kml zip gpx txt readme',
+        'max_filesize' => '10 MB',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '53',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_full_name'.
+  $fields['node-observation-field_full_name'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_full_name',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'family' => array(
+          0 => 'family',
+        ),
+        'given' => array(
+          0 => 'given',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'name',
+      'settings' => array(
+        'allow_family_or_given' => 0,
+        'autocomplete_separator' => array(
+          'credentials' => ', ',
+          'family' => ' -',
+          'generational' => ' ',
+          'given' => ' -',
+          'middle' => ' -',
+          'title' => ' ',
+        ),
+        'autocomplete_source' => array(
+          'credentials' => array(),
+          'family' => array(),
+          'generational' => array(
+            'generational' => 'generational',
+          ),
+          'given' => array(),
+          'middle' => array(),
+          'title' => array(
+            'title' => 'title',
+          ),
+        ),
+        'components' => array(
+          'credentials' => 0,
+          'family' => 'family',
+          'generational' => 'generational',
+          'given' => 'given',
+          'middle' => 'middle',
+          'title' => 'title',
+        ),
+        'generational_options' => '-- --
+Jr.
+Sr.
+I
+II
+III
+IV
+V
+VI
+VII
+VIII
+IX
+X',
+        'labels' => array(
+          'credentials' => 'Credentials',
+          'family' => 'Family',
+          'generational' => 'Generational',
+          'given' => 'Given',
+          'middle' => 'Middle name(s)',
+          'title' => 'Title',
+        ),
+        'max_length' => array(
+          'credentials' => '255',
+          'family' => '63',
+          'generational' => '15',
+          'given' => '63',
+          'middle' => '127',
+          'title' => '31',
+        ),
+        'minimum_components' => array(
+          'credentials' => 0,
+          'family' => 'family',
+          'generational' => 0,
+          'given' => 0,
+          'middle' => 0,
+          'title' => 0,
+        ),
+        'sort_options' => array(
+          'generational' => 0,
+          'title' => 'title',
+        ),
+        'title_options' => '-- --
+Mr.
+Mrs.
+Miss
+Ms.
+Capt.
+Dr.
+Prof.
+Sir.',
+      ),
+      'translatable' => '0',
+      'type' => 'name',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Enter as much or as little of their name as you know. Logging in will allow you to enter multiple as well as save and reuse observers.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'name',
+          'settings' => array(
+            'format' => 'default',
+            'markup' => 0,
+            'multiple' => 'default',
+            'multiple_and' => 'text',
+            'multiple_delimiter' => ', ',
+            'multiple_delimiter_precedes_last' => 'never',
+            'multiple_el_al_first' => 1,
+            'multiple_el_al_min' => 3,
+            'output' => 'default',
+          ),
+          'type' => 'name_formatter',
+          'weight' => '23',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_full_name',
+      'label' => 'Observer',
+      'required' => 0,
+      'settings' => array(
+        'component_css' => '',
+        'component_layout' => 'default',
+        'credentials_inline' => 0,
+        'field_type' => array(
+          'credentials' => 'text',
+          'family' => 'text',
+          'generational' => 'select',
+          'given' => 'text',
+          'middle' => 'text',
+          'title' => 'select',
+        ),
+        'generational_field' => 'select',
+        'inline_css' => array(
+          'credentials' => '',
+          'family' => '',
+          'generational' => '',
+          'given' => '',
+          'middle' => '',
+          'title' => '',
+        ),
+        'override_format' => 'default',
+        'show_component_required_marker' => 0,
+        'size' => array(
+          'credentials' => '35',
+          'family' => '20',
+          'generational' => '5',
+          'given' => '20',
+          'middle' => '20',
+          'title' => '6',
+        ),
+        'title_display' => array(
+          'credentials' => 'description',
+          'family' => 'description',
+          'generational' => 'description',
+          'given' => 'description',
+          'middle' => 'description',
+          'title' => 'description',
+        ),
+        'title_field' => 'select',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'name',
+        'settings' => array(),
+        'type' => 'name_widget',
+        'weight' => '45',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_gmu'.
+  $fields['node-observation-field_gmu'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_gmu',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'gmu',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => '19',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_gmu',
+      'label' => 'Game Management Unit',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'options',
+        'settings' => array(
+          'autocomplete_path' => 'taxonomy/autocomplete',
+          'size' => 60,
+        ),
+        'type' => 'options_buttons',
+        'weight' => '11',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_habitat_description'.
+  $fields['node-observation-field_habitat_description'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_habitat_description',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '<p><strong>Optional:</strong> Enter a description about the characteristics of the landscape in the immediate vicinity of this location.  For example, "<em>mature lodgepole pine on high mountain slope.</em>"</p>',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '17',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_habitat_description',
+      'label' => 'Habitat Description',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => '3',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '10',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_highway'.
+  $fields['node-observation-field_highway'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_highway',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '10',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '21',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_highway',
+      'label' => 'Highway',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '10',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '13',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_identification_tools'.
+  $fields['node-observation-field_identification_tools'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_identification_tools',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'What tools, guides or reference materials were used to assist with this identification?',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '30',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_identification_tools',
+      'label' => 'Identification Tools',
+      'required' => 0,
+      'settings' => array(
+        'exclude_cv' => FALSE,
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => '2',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '52',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_life_stage'.
+  $fields['node-observation-field_life_stage'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_life_stage',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Unknown' => 'Unknown',
+          'Immature' => 'Immature',
+          'Juvenile' => 'Juvenile',
+          'Subadult' => 'Subadult',
+          'Mature' => 'Mature',
+          'Yearling' => 'Yearling',
+          'Egg' => 'Egg',
+          'Pupa' => 'Pupa',
+          'Larva' => 'Larva',
+          'Nymph' => 'Nymph',
+          'Seedling' => 'Seedling',
+          'Vegetative' => 'Vegetative',
+          'Flowering' => 'Flowering',
+          'Fruiting' => 'Fruiting',
+          'Dormant' => 'Dormant',
+          'Mixed' => 'Mixed',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Unknown',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'How old was the individual(s)?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '7',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_life_stage',
+      'label' => 'Life Stage',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'options_select',
+        'weight' => '9',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_life_state'.
+  $fields['node-observation-field_life_state'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_life_state',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Unknown' => 'Unknown',
+          'Dead' => 'Dead',
+          'Alive' => 'Alive',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Alive',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'Dead or Alive?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '6',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_life_state',
+      'label' => 'Life State',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'options_select',
+        'weight' => '8',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_location'.
+  $fields['node-observation-field_location'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_location',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'geofield',
+      'settings' => array(
+        'backend' => 'default',
+        'srid' => '4326',
+      ),
+      'translatable' => '0',
+      'type' => 'geofield',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Examples:
+<em>
+<ul>
+<li>{"type":"Point","coordinates":[-116.8,48.49]}</li>
+<li>{"type":"Polygon","coordinates":[[[-114.1378,43.34123],[-114.8,43.523],[-114.08,43],[-114.1378,43.34123]]]}</li>
+<li>{"type":"LineString","coordinates":[[-104.98726129532,39.741361723361],[-104.98720765114,39.741324599196],[-104.98715400696,39.741270975367]]}</li>
+<li>{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.5,0.5]},{"type":"LineString","coordinates":[[101.7,0.7],[102.7,1.7]]},{"type":"MultiPolygon","coordinates":[[[[102,2],[103,2],[103,3],[102,3],[102,2]]],[[[100,0],[101,0],[101,1],[100,1],[100,0]]]]}]}</li>
+</ul>
+</em>',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'geofield_map',
+          'settings' => array(
+            'geofield_map_baselayers_hybrid' => 1,
+            'geofield_map_baselayers_map' => 1,
+            'geofield_map_baselayers_physical' => 1,
+            'geofield_map_baselayers_satellite' => 1,
+            'geofield_map_center' => array(
+              'lat' => 0,
+              'lon' => 0,
+            ),
+            'geofield_map_controltype' => 'default',
+            'geofield_map_draggable' => 1,
+            'geofield_map_height' => '440px',
+            'geofield_map_maptype' => 'physical',
+            'geofield_map_max_zoom' => '0',
+            'geofield_map_min_zoom' => '0',
+            'geofield_map_mtc' => 'standard',
+            'geofield_map_overview' => 0,
+            'geofield_map_overview_opened' => 0,
+            'geofield_map_pancontrol' => 1,
+            'geofield_map_scale' => 1,
+            'geofield_map_scrollwheel' => 0,
+            'geofield_map_streetview_show' => 1,
+            'geofield_map_width' => '100%',
+            'geofield_map_zoom' => '12',
+          ),
+          'type' => 'geofield_map_map',
+          'weight' => '10',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_location',
+      'label' => 'Location',
+      'required' => 1,
+      'settings' => array(
+        'exclude_cv' => FALSE,
+        'local_solr' => array(
+          'enabled' => FALSE,
+          'lat_field' => 'lat',
+          'lng_field' => 'lng',
+        ),
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'geofield',
+        'settings' => array(),
+        'type' => 'geofield_geojson',
+        'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_location_confidence'.
+  $fields['node-observation-field_location_confidence'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_location_confidence',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => '1000',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'How precise is this location?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => 1,
+            'scale' => 0,
+            'thousand_separator' => ',',
+          ),
+          'type' => 'number_integer',
+          'weight' => '11',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_location_confidence',
+      'label' => 'Location Precision',
+      'required' => 1,
+      'settings' => array(
+        'max' => '10000000',
+        'min' => '0',
+        'prefix' => '±',
+        'suffix' => ' meters',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'select_or_other',
+        'settings' => array(
+          'apply_chosen' => '',
+          'available_options' => '10|Precise (within 10m/11yd)
+50|Accurate (within 50m/55yd)
+250|Moderate Precision (within 250m/273yd)
+1000|Estimated Precision (< 1km/0.6mi)
+10000|Low Precision (> 1km/0.6mi)',
+          'available_options_php' => '',
+          'markup_available_options_php' => '&lt;none&gt;',
+          'other' => 'Other',
+          'other_size' => '60',
+          'other_title' => 'Please enter an accuracy in meters',
+          'other_unknown_defaults' => 'other',
+          'sort_options' => 0,
+        ),
+        'type' => 'select_or_other',
+        'weight' => '6',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_location_resource'.
+  $fields['node-observation-field_location_resource'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_location_resource',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '12',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_location_resource',
+      'label' => 'Location Resource',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '7',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_location_steps'.
+  $fields['node-observation-field_location_steps'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_location_steps',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Processing steps',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '16',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_location_steps',
+      'label' => 'Location Steps',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => '5',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '8',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_location_unresolveable'.
+  $fields['node-observation-field_location_unresolveable'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_location_unresolveable',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => 'No',
+          1 => 'Yes',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_boolean',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 0,
+        ),
+      ),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '40',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_location_unresolveable',
+      'label' => 'Location Unresolveable',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'display_label' => 1,
+        ),
+        'type' => 'options_onoff',
+        'weight' => '11',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_location_use'.
+  $fields['node-observation-field_location_use'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_location_use',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Not Applicable' => 'Not Applicable',
+          'Unknown' => 'Unknown',
+          'Breeding' => 'Breeding',
+          'Migratory' => 'Migratory',
+          'Non-breeding Aggregation' => 'Non-breeding Aggregation (e.g. Bachelor colony, den, roosting)',
+          'Hibernaculum' => 'Hibernaculum',
+          'Presumed Hibernaculum' => 'Presumed Hibernaculum',
+          'Maternity colony' => 'Maternity colony',
+          'Bachelor colony' => 'Bachelor colony',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Unknown',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'Is this location of special conservation significance?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '15',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_location_use',
+      'label' => 'Location Use',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'options_select',
+        'weight' => '10',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_milepost'.
+  $fields['node-observation-field_milepost'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_milepost',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'number',
+      'settings' => array(
+        'decimal_separator' => '.',
+        'precision' => '10',
+        'scale' => '2',
+      ),
+      'translatable' => '0',
+      'type' => 'number_decimal',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => TRUE,
+            'scale' => 2,
+            'thousand_separator' => ' ',
+          ),
+          'type' => 'number_decimal',
+          'weight' => '22',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_milepost',
+      'label' => 'Milepost',
+      'required' => 0,
+      'settings' => array(
+        'max' => '550',
+        'min' => '0',
+        'prefix' => '',
+        'suffix' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'number',
+        'settings' => array(),
+        'type' => 'number',
+        'weight' => '14',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_museum'.
+  $fields['node-observation-field_museum'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_museum',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'ANSP' => 'Academy of Natural Sciences [ANSP]',
+          'PH' => 'Academy of Natural Sciences Herbarium [PH]',
+          'AMNH' => 'American Museum of Natural History [AMNH]',
+          'BLM-OWYHEE' => 'BLM-Owyhee Field Office Herbarium [BLM-OWYHEE]',
+          'BLM-POCAT' => 'BLM-Pocatello Field Office Herbarium [BLM-POCAT]',
+          'BLM-SALMON' => 'BLM-Salmon Field Office Herbarium [BLM-SALMON]',
+          'BSU' => 'Boise State University [BSU]',
+          'BYU' => 'Brigham Young University [BYU]',
+          'BRY' => 'Brigham Young University Herbarium [BRY]',
+          'CAS' => 'California Academy of Sciences [CAS]',
+          'NML' => 'Canadian Museum of Nature [NML]',
+          'CAN' => 'Canadian Museum of Nature Herbarium [CAN]',
+          'CM' => 'Carnegie Museum [CM]',
+          'CIC' => 'College of Idaho Herbarium (formerly Albertson College of Idaho) [CIC]',
+          'CU' => 'Cornell University [CU]',
+          'FMNH' => 'Field Museum of Natural History [FMNH]',
+          'F' => 'Field Museum of Natural History Herbarium [F]',
+          'FLMNH' => 'Florida Museum of Natural History [FLMNH]',
+          'OJS' => 'from Comb_PHV2 list [OJS]',
+          'AC' => 'from NIHDBID list - Albertson\'s syn?? [AC]',
+          'UF' => 'from NIHDBID list [UF]',
+          'GLAC' => 'Glacier National Park Collection [GLAC]',
+          'GH' => 'Harvard University [GH]',
+          'IDFG' => 'Idaho Department of Fish and Game Herbarium [IDFG]',
+          'IMNH' => 'Idaho Museum of Natural History [IMNH]',
+          'IDAHO' => 'Idaho State University [IDAHO]',
+          'IDS' => 'Idaho State University Herbarium [IDS]',
+          'INHS' => 'Illinois Natural History Survey [INHS]',
+          'IND' => 'Indiana University Herbarium [IND]',
+          'BOIS' => 'Intermountain Forest and Range Experiment Station Herbarium, USFS [BOIS]',
+          'LCSC' => 'Lewis-Clark State College [LCSC]',
+          'LACM' => 'Los Angeles County Museum [LACM]',
+          'LSUMZ' => 'Louisiana State University [LSUMZ]',
+          'LTU' => 'Louisiana Tech University [LTU]',
+          'WS' => 'Marion Ownbey Herbarium, Washington State University [WS]',
+          'MSUM' => 'Michigan State University [MSUM]',
+          'MPM' => 'Milwaukee Public Museum [MPM]',
+          'MO' => 'Missouri Botanical Garden Herbarium [MO]',
+          'MTHP' => 'Montana Natural Heritage Program [MTHP]',
+          'MSBU' => 'Montana State University [MSBU]',
+          'MRNP' => 'Mount Rainier National Park Herbarium [MRNP]',
+          'MCZ' => 'Museum of Comparative Zoology - Harvard [MCZ]',
+          'UIMNH' => 'Museum of Natural History, Champaign-Urbana, University of Illinois [UIMNH]',
+          'ACMNH' => 'Orma J. Smith Museum of Natural History, College of Idaho (ALBRCIDA) (formerly Albertson College of Idaho) [ACMNH]',
+          'UGAMNH' => 'Museum of Natural History, University of Georgia [UGAMNH]',
+          'MSB' => 'Museum of Southwestern Biology [MSB]',
+          'NA' => 'NA Herbarium [NA]',
+          'NY' => 'New York Botanical Garden Herbarium [NY]',
+          'NPT' => 'Nez Perce Tribe Herbarium [NPT]',
+          'NCSM' => 'North Carolina State Museum of Natural History [NCSM]',
+          'NLU' => 'Northern Louisiana University [NLU]',
+          'NMUMZ' => 'Northern Michigan University, Marquette [NMUMZ]',
+          'NNC' => 'Northwest Nazarene College [NNC]',
+          'OMNH' => 'Oklahoma Museum of Natural History [OMNH]',
+          'OSC' => 'Oregon State University Herbarium [OSC]',
+          'PLU' => 'Pacific Lutheran University [PLU]',
+          'RM' => 'Rocky Mountain Herbarium [RM]',
+          'PS' => 'Slater Museum of Natural History Herbarium, University of Puget Sound [PS]',
+          'SRP' => 'Snake River Plains Herbarium, Boise State University [SRP]',
+          'STI' => 'Stillenger Herbarium, University of Idaho [STI]',
+          'TCWC' => 'Texas A&M University [TCWC]',
+          'TTU' => 'Texas Technical University [TTU]',
+          'TU' => 'Tulane University [TU]',
+          'DAV' => 'UC Davis Herbarium, University of California [DAV]',
+          'US' => 'United States National Herbarium, Smithsonian Institution [US]',
+          'USNM' => 'United States National Museum, Smithsonian Institution [USNM]',
+          'MVZ' => 'University of California - Berkeley [MVZ]',
+          'UC' => 'University of California Herbarium - Berkeley [UC]',
+          'UCM' => 'University of Colorado [UCM]',
+          'GA' => 'University of Georgia Herbarium [GA]',
+          'UIDA' => 'University of Idaho [UIDA]',
+          'UIM' => 'University of Idaho [UIM]',
+          'IDF' => 'University of Idaho Herbarium, College of Forestry [IDF]',
+          'KU' => 'University of Kansas [KU]',
+          'UL' => 'University of Louisville [UL]',
+          'UMMZ' => 'University of Michigan [UMMZ]',
+          'MICH' => 'University of Michigan Herbarium [MICH]',
+          'UMZ' => 'University of Montana [UMZ]',
+          'NCU' => 'University of North Carolina Herbarium [NCU]',
+          'ORE' => 'University of Oregon Herbarium [ORE]',
+          'CPS' => 'University of Puget Sound [CPS]',
+          'USD' => 'University of South Dakota [USD]',
+          'UTACV' => 'University of Texas - Arlington [UTACV]',
+          'UTEP' => 'University of Texas - El Paso [UTEP]',
+          'UU' => 'University of Utah [UU]',
+          'WTU' => 'University of Washington Herbarium [WTU]',
+          'WAT' => 'University of Waterloo Herbarium [WAT]',
+          'UWO' => 'University of Western Ontario Herbarium [UWO]',
+          'DAO' => 'Vascular Plant Herbarium, Agriculture & Agri-Food Canada [DAO]',
+          'CRCM' => 'Washington State University [CRCM]',
+          'WSC' => 'Washington State University Herbarium [WSC]',
+          'WILLU' => 'Willamette University Herbarium [WILLU]',
+          'YMP' => 'Yale University [YMP]',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '42',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_museum',
+      'label' => 'Museum',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'options_select',
+        'weight' => '55',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_observation_method'.
+  $fields['node-observation-field_observation_method'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_observation_method',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Seen' => 'Individual(s) Observed (seen)',
+          'Hand' => 'Observed Individual(s) in Hand or Close Range',
+          'Heard' => 'Heard Vocalizations',
+          'Nest' => 'Nest, Den, Burrow or Habitation Observed',
+          'Scat' => 'Scat Observed',
+          'Tracks' => 'Tracks Observed',
+          'Telemetry' => 'Telemetry (GPS, Argos, Radio collar)',
+          'Sample' => 'Sample Collected',
+          'Specimen' => 'Museum or Herbarium Specimen',
+          'Photographed' => 'Photographed',
+          'Negative' => 'Not Found (Negative Data)',
+          'EnfInvestigation' => 'Enforcement Investigation',
+          'Unknown' => 'Unknown',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Please choose all methods that apply.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '2',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_observation_method',
+      'label' => 'Observation Method(s)',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '4',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_observer'.
+  $fields['node-observation-field_observer'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_observer',
+      'foreign keys' => array(
+        'nid' => array(
+          'columns' => array(
+            'nid' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'nid' => array(
+          0 => 'nid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'node_reference',
+      'settings' => array(
+        'referenceable_types' => array(
+          'article' => 0,
+          'bgmr' => 0,
+          'collar' => 0,
+          'individual' => 0,
+          'issue' => 0,
+          'observation' => 0,
+          'observation_capture' => 0,
+          'observation_import' => 0,
+          'observation_in_aerial_survey' => 0,
+          'observation_in_waterbird_survey' => 0,
+          'observation_individual' => 0,
+          'observation_plant' => 0,
+          'page' => 0,
+          'person' => 'person',
+          'roadkill' => 0,
+          'survey_aerial' => 0,
+          'survey_site' => 0,
+          'survey_waterbird' => 0,
+          'swap_species_prioritization' => 0,
+          'swap_species_projects_actions_fo' => 0,
+          'taxa' => 0,
+          'unlawful_take' => 0,
+          'weed_control' => 0,
+        ),
+        'view' => array(
+          'args' => array(),
+          'display_name' => '',
+          'view_name' => '',
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'node_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Who observed this animal or plant? The first observer is required. You may drag and drop to reorder the list.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'node_reference',
+          'settings' => array(),
+          'type' => 'node_reference_default',
+          'weight' => '22',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_observer',
+      'label' => 'Observer(s)',
+      'required' => 1,
+      'settings' => array(
+        'exclude_cv' => FALSE,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'node_reference',
+        'settings' => array(
+          'autocomplete_match' => 'starts_with',
+          'autocomplete_path' => 'node_reference/autocomplete',
+          'multiple_value_widget' => 'table',
+          'references_dialog_add' => 0,
+          'references_dialog_edit' => 0,
+          'references_dialog_hide_input' => 1,
+          'references_dialog_remove' => 1,
+          'references_dialog_search' => 1,
+          'references_dialog_search_view' => '',
+          'size' => '60',
+        ),
+        'type' => 'node_reference_autocomplete',
+        'weight' => '44',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_organization'.
+  $fields['node-observation-field_organization'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_organization',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Agency, Group, Business, etc.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '24',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_organization',
+      'label' => 'Organization',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '47',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_phone'.
+  $fields['node-observation-field_phone'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_phone',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '20',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '28',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_phone',
+      'label' => 'Phone',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '49',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_photo'.
+  $fields['node-observation-field_photo'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_photo',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'image',
+      'settings' => array(
+        'default_image' => 0,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => '0',
+      'type' => 'image',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'deleted' => '0',
+      'description' => 'Share photos of your observation to help the community confirm your identification.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'image',
+          'settings' => array(
+            'image_link' => 'file',
+            'image_style' => 'medium640',
+          ),
+          'type' => 'image',
+          'weight' => '9',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_photo',
+      'label' => 'Photo(s)',
+      'required' => 0,
+      'settings' => array(
+        'alt_field' => 1,
+        'default_image' => 0,
+        'file_directory' => 'observations/photos/[current-date:custom:Y]/[current-date:custom:m]',
+        'file_extensions' => 'png gif jpg jpeg',
+        'max_filesize' => '10 MB',
+        'max_resolution' => '',
+        'min_resolution' => '',
+        'title_field' => 1,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'image',
+        'settings' => array(
+          'preview_image_style' => 'thumbnail',
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'image_image',
+        'weight' => '12',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_position'.
+  $fields['node-observation-field_position'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_position',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Job title and/or experience as it relates to fish, game and the outdoors',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '25',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_position',
+      'label' => 'Position',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '46',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_region'.
+  $fields['node-observation-field_region'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_region',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'fish_game_region',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => '18',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_region',
+      'label' => 'Region',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '12',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_sacode'.
+  $fields['node-observation-field_sacode'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_sacode',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'The SA code is for internal use only.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '37',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_sacode',
+      'label' => 'SA code (IDFG Reference Code)',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '30',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '60',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_sensitive'.
+  $fields['node-observation-field_sensitive'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_sensitive',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Academic research' => 'Academic research',
+          'Private land' => 'Private land',
+          'Location use' => 'Sensitive location use',
+          'Cave' => 'Sensitive location cave',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '45',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_sensitive',
+      'label' => 'Sensitive',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => 0,
+        ),
+        'type' => 'options_buttons',
+        'weight' => '58',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_session'.
+  $fields['node-observation-field_session'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_session',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '35',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_session',
+      'label' => 'Session',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '64',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_sex'.
+  $fields['node-observation-field_sex'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_sex',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'Unknown' => 'Unknown',
+          'Female' => 'Female',
+          'Male' => 'Male',
+          'Both' => 'Both Sexes',
+          'NA' => 'Not Applicable',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Unknown',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'Male, Female or Not Applicable?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '5',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_sex',
+      'label' => 'Sex',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'options_select',
+        'weight' => '7',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_source_agency'.
+  $fields['node-observation-field_source_agency'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_source_agency',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '36',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_source_agency',
+      'label' => 'Source Agency',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'select_or_other',
+        'settings' => array(
+          'apply_chosen' => '',
+          'available_options' => 'Aquila Environmental
+Boise State University
+City of Boise
+Coeur d\'Alene Tribe
+College of Idaho
+Contractor
+Cornell Laboratory of Ornithology
+Idaho Army National Guard
+Idaho Bird Observatory
+Idaho Department of Environmental Quality
+Idaho Department of Fish and Game
+Idaho Power Company
+Latah Soil and Water Conservation District
+Maxim Technologies
+Other
+Potlatch Corportation
+Raptor Research Center
+Red Willow Research, Inc.
+Science Applications International Corporation, Environmental Programs Division
+Shoshone-Paiute Tribes
+TetraTech
+The Nature Conservancy of Idaho
+Trec, Inc.
+U.S. Bureau of Land Management
+U.S. Fish and Wildlife Service
+U.S. Forest Service
+U.S. Forest Service -- NRIS Fauna
+U.S. Geological Survey
+University of Idaho
+various, patuxent data dump
+WEST, Inc
+Idaho Cave Survey
+ERO Resources Corp.
+Idaho State University
+JBR Environmental Consultants Inc.
+Wong Fei Hung
+Xover
+Survey
+Glen Plake
+Mike Grant',
+          'available_options_php' => '',
+          'markup_available_options_php' => '&lt;none&gt;',
+          'other' => 'Other',
+          'other_size' => '60',
+          'other_title' => '',
+          'other_unknown_defaults' => 'available',
+          'sort_options' => 1,
+        ),
+        'type' => 'select_or_other',
+        'weight' => '58',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_source_type'.
+  $fields['node-observation-field_source_type'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_source_type',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Animal Observation Report (Sightings)',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '41',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_source_type',
+      'label' => 'Source Type',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'select_or_other',
+        'settings' => array(
+          'apply_chosen' => '',
+          'available_options' => 'Animal Observation Report (Sightings)
+Digital, Hand entered
+Digital, Appended
+Data Spreadsheet, Hard Copy (Sightings)
+Unpublished agency report
+Published report
+Data Spreadsheet, Hard Copy (w/ source code)
+Misc (email, notes, etc) (Sightings)
+Museum Collections Record
+Plant Observation Report -Hard copy (Sightings)
+Plant Observation Report-Digital (Electronic File)
+Herbarium Label (Sightings)
+Herbarium Label
+Scientific Reporting Permit',
+          'available_options_php' => '',
+          'markup_available_options_php' => '&lt;none&gt;',
+          'other' => 'Other',
+          'other_size' => '60',
+          'other_title' => '',
+          'other_unknown_defaults' => 'available',
+          'sort_options' => 0,
+        ),
+        'type' => 'select_or_other',
+        'weight' => '63',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_species'.
+  $fields['node-observation-field_species'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_species',
+      'foreign keys' => array(
+        'nid' => array(
+          'columns' => array(
+            'nid' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'nid' => array(
+          0 => 'nid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'node_reference',
+      'settings' => array(
+        'referenceable_types' => array(
+          'article' => 0,
+          'bgmr' => 0,
+          'collar' => 0,
+          'individual' => 0,
+          'observation' => 0,
+          'observation_capture' => 0,
+          'observation_import' => 0,
+          'observation_in_aerial_survey' => 0,
+          'observation_in_waterbird_survey' => 0,
+          'observation_individual' => 0,
+          'observations_of_plants' => 0,
+          'page' => 0,
+          'person' => 0,
+          'roadkill' => 0,
+          'survey_aerial' => 0,
+          'survey_plant' => 0,
+          'survey_site' => 0,
+          'survey_waterbird' => 0,
+          'swap_species_prioritization' => 0,
+          'swap_species_projects_actions_fo' => 0,
+          'taxa' => 'taxa',
+          'unlawful_take' => 0,
+          'weed_control' => 0,
+        ),
+        'references_id_trim_roles' => array(
+          2 => '2',
+          3 => '3',
+        ),
+        'view' => array(
+          'args' => array(),
+          'display_name' => '',
+          'view_name' => '',
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'node_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Please enter the species or taxa that was observed. Choices will appear as you type, please select one.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'node_reference',
+          'settings' => array(
+            'node_reference_view_mode' => 'preview',
+          ),
+          'type' => 'node_reference_node',
+          'weight' => '0',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_species',
+      'label' => 'Species',
+      'required' => 1,
+      'settings' => array(
+        'exclude_cv' => FALSE,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'node_reference',
+        'settings' => array(
+          'autocomplete_match' => 'starts_with',
+          'autocomplete_path' => 'node_reference/autocomplete',
+          'references_dialog_add' => 0,
+          'references_dialog_edit' => 0,
+          'references_dialog_hide_input' => 0,
+          'references_dialog_remove' => 0,
+          'references_dialog_search' => 0,
+          'references_dialog_search_view' => '',
+          'size' => '60',
+        ),
+        'type' => 'node_reference_autocomplete',
+        'weight' => '2',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_species_account'.
+  $fields['node-observation-field_species_account'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_species_account',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '<p><strong>Optional, but helpful:</strong> Tell us about this sighting. Tell us details such as the color, size, behavior, identifiable features, etc. or give us more information about your encounter.</p>',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '8',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_species_account',
+      'label' => 'Species Account',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => '5',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '11',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_species_confidence'.
+  $fields['node-observation-field_species_confidence'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_species_confidence',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => '50',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'How confident are you of this identification?',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'select_or_other',
+          'settings' => array(),
+          'type' => 'select_or_other_formatter',
+          'weight' => '1',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_species_confidence',
+      'label' => 'Species Confidence',
+      'required' => 1,
+      'settings' => array(
+        'max' => '100',
+        'min' => '0',
+        'prefix' => '',
+        'suffix' => '%',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'select_or_other',
+        'settings' => array(
+          'apply_chosen' => '',
+          'available_options' => '0|Please help me identify!
+10|I\'m guessing here...
+50|Probably. I\'m a bit uncertain
+80|I\'m very confident
+100|I\'m absolutely certain',
+          'available_options_php' => '',
+          'markup_available_options_php' => '&lt;none&gt;',
+          'other' => 'Other',
+          'other_size' => '60',
+          'other_title' => 'Enter a percent certainty as an integer between 0 (No idea) and 100 (Certain)',
+          'other_unknown_defaults' => 'other',
+          'sort_options' => 0,
+        ),
+        'type' => 'select_or_other',
+        'weight' => '3',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_specimen_number'.
+  $fields['node-observation-field_specimen_number'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_specimen_number',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '39',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_specimen_number',
+      'label' => 'Specimen Number',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '56',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_survey_method'.
+  $fields['node-observation-field_survey_method'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_survey_method',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => array(
+        0 => array(
+          'value' => 'Incidental Observation',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'If this observation is part of a larger survey or protocol, please select the best match or add.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '33',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_survey_method',
+      'label' => 'Survey Method',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'select_or_other',
+        'settings' => array(
+          'apply_chosen' => '',
+          'available_options' => 'Bald Eagle Nest Monitoring
+BLM Survey
+Breeding Bird Survey
+Bruneau Dunes Tiger Beetle DNA Study
+Burrowing Owl Survey
+Colony Counts
+Columbia Spotted Frog GBDPS Survey
+Cursory or Incidental-Non Thorough Survey
+EDRR
+Fairly Thorough Survey
+Fisheries Survey
+Four Rivers Burrowing Owl Survey
+Golden Eagle Nest Monitoring
+Harlequin Duck Aerial Survey
+Harlequin Duck Ground Survey
+Herbarium Label
+Idaho Falls District Burrowing Owl Survey
+Idaho Waterbird Survey
+Incidental Observation
+Inventory/Targeted Survey
+Landbird Survey
+Long-billed Curlew Survey
+MAPS
+Marshbird Monitoring
+Monitoring
+Monitoring program
+Plant Summary
+Raptor Nest Survey
+Red Willow Research Center Inventory or Survey
+Revisit to previously known location
+Sandhill Crane Rocky Mtn Pop Survey
+Snow Track Survey
+Steenhof
+Trumpeter Swan Survey
+Very Thorough Survey
+Hibernacula Monitoring Survey
+Forest Service Owl Survey
+ERO Resources Corp. survey
+Idaho Training Range EIS field survey
+Upland Raptor Survey
+OHV Trail Use Monitoring with remote sensing cameras
+Recreation Maintenance work at the Grayback Campground, SW of Idaho City, ID
+Mourning Dove Call Count Survey
+Invertebrate Collecting
+Bat Survey
+Survey
+Sightability - Abundance
+Trend Count
+Winter Comp
+Summer Comp
+Fixed Wing
+Found during sagebrush and range use surveys incidentally 
+found during a fuel moisture survey collecting needles 
+Observed on trail camera - see attached photo
+Research Project
+Incidentally trapped
+Trail camera',
+          'available_options_php' => '',
+          'markup_available_options_php' => '&lt;none&gt;',
+          'other' => 'Other',
+          'other_size' => '60',
+          'other_title' => '',
+          'other_unknown_defaults' => 'other',
+          'sort_options' => 0,
+        ),
+        'type' => 'select_or_other',
+        'weight' => '54',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_survey_site'.
+  $fields['node-observation-field_survey_site'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_survey_site',
+      'foreign keys' => array(
+        'node' => array(
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'entityreference',
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'direction' => 'ASC',
+            'property' => 'title',
+            'type' => 'property',
+          ),
+          'target_bundles' => array(
+            'survey_site' => 'survey_site',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
+      'translatable' => '0',
+      'type' => 'entityreference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value_function' => 'entityreference_prepopulate_field_default_value',
+      'deleted' => '0',
+      'description' => 'Optional add a survey site if this is a revisited location such as a lek, survey route or bird count stop.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'entityreference',
+          'settings' => array(
+            'link' => 1,
+          ),
+          'type' => 'entityreference_label',
+          'weight' => '13',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_survey_site',
+      'label' => 'Survey Site',
+      'required' => 0,
+      'settings' => array(
+        'behaviors' => array(
+          'prepopulate' => array(
+            'action' => 'none',
+            'action_on_edit' => 0,
+            'fallback' => 'none',
+            'og_context' => 0,
+            'skip_perm' => '0',
+            'status' => 1,
+          ),
+        ),
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'inline_entity_form',
+        'settings' => array(
+          'fields' => array(),
+          'type_settings' => array(
+            'allow_existing' => 1,
+            'delete_references' => 0,
+            'ief_view_mode' => 'inline_entity_form',
+            'match_operator' => 'STARTS_WITH',
+          ),
+        ),
+        'type' => 'inline_entity_form',
+        'weight' => '9',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_verification_status'.
+  $fields['node-observation-field_verification_status'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_verification_status',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'verified' => 'Verified',
+          'possible' => 'Possible',
+          'unverified' => 'Unverified',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => '47',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_verification_status',
+      'label' => 'Verification Status',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'options_select',
+        'weight' => '65',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-observation-field_xid'.
+  $fields['node-observation-field_xid'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_xid',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'observation',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => '44',
+        ),
+        'inline_entity_form' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_xid',
+      'label' => 'Source ID',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '61',
+      ),
+    ),
+  );
 
   // Exported field: 'node-observation_nest_survey-field_address'.
   $fields['node-observation_nest_survey-field_address'] = array(
@@ -12331,6 +16545,7 @@ Where Attribution follows <a href="http://creativecommons.org" title="CC">Creati
   t('SGCN');
   t('Scientific Name(s)');
   t('Sensitive');
+  t('Session');
   t('Sex');
   t('Share photos of your observation to help the community confirm your identification.');
   t('Should this taxa be included in the default lookup list when adding observations?');

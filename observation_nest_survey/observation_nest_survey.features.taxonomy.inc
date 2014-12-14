@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * nest_survey_components.features.taxonomy.inc
+ * observation_nest_survey.features.taxonomy.inc
  */
 
 /**
  * Implements hook_taxonomy_default_vocabularies().
  */
-function nest_survey_components_taxonomy_default_vocabularies() {
+function observation_nest_survey_taxonomy_default_vocabularies() {
   return array(
     'county' => array(
       'name' => 'County',

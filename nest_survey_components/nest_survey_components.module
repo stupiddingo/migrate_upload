@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Nest Survey Components feature.
- */
-
-include_once 'nest_survey_components.features.inc';

@@ -1,14 +1,22 @@
 <?php
 /**
  * @file
- * nest_survey_components.features.inc
+ * observation_nest_survey.features.inc
  */
 
 /**
  * Implements hook_node_info().
  */
-function nest_survey_components_node_info() {
+function observation_nest_survey_node_info() {
   $items = array(
+    'observation' => array(
+      'name' => t('Observation'),
+      'base' => 'node_content',
+      'description' => t('Basic Observation'),
+      'has_title' => '1',
+      'title_label' => t('Title'),
+      'help' => '',
+    ),
     'observation_nest_survey' => array(
       'name' => t('Observation Nest Survey'),
       'base' => 'node_content',

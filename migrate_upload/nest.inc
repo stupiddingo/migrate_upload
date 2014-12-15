@@ -151,7 +151,7 @@ class nestMigration extends Migration {
   // Create pseudo rows to use in the import, the values may be constant or calculated.
   public function prepareRow($row) {   
     // Calculate Start/End Date time and Date Confidence.
-    if ($row->SurvStart_Time && $row->SurvEndTime) {
+    if ($row->SurvStart_Time && $row->SurvEnd_Time) {
       $row->calc_date_confidence = 3600; // Hour
       $startdate = new DateTime($row->{'Date'} . ' ' . trim($row->SurvStart_Time), new DateTimeZone('America/Boise'));
       $enddate = new DateTime($row->{'Date'} . ' ' . trim($row->SurvEnd_Time), new DateTimeZone('America/Boise'));
@@ -179,8 +179,7 @@ class nestMigration extends Migration {
     $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
-    //TODO $row->calc_location_steps = '''Transformed Location'' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
-   $row->calc_location_steps = '';
+    $row->calc_location_steps = '\'Transformed Location\' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
    
     // These are calculated here rather than as callbacks because value used for other fields.   
     $row->calc_nest_status = lu_site_status($row->{'Nest Status'});
@@ -219,10 +218,10 @@ class nestMigration extends Migration {
     $row->calc_Directions = trim($directions . '\n\rSite Name: ' . $row->{'Site Name'} . '\n\rTerritory: ' . $row->{'Territory'} . '\n\rNestID: ' . $row->NestID, ' \t\n\r');
 
     $row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
+        $row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
     
     $row->calc_sa_code = 'UNK'; // TODO JOSH Somehow calc based on upload.
     $row->calc_record_ID = 0; // TODO JOSH Somehow calc based on upload row id and spreadsheet, possibly add SA Code 
-    $row->calc_observer_ID = null; // TODO JOSH calc ObserverID based on flowchart.
     $row->calc_uid = 1486;  // TODO JOSH Somehow calc from upload.
     /*
     // Do we need the following?

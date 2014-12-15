@@ -36,7 +36,7 @@ function _migrate_upload_remove_empties($destination, $entity) {
  */
 function _migrate_upload_lu_location_wgs($value) {
   // This web service transforms, cleans and converts (44 30 59N, 116 02 27W -> 44.516389, -116.040833 & 44, 116 -> 44, -116).
-  $url = 'https://fishandgame.idaho.gov/ifwis/core/tools/reproject/'.rand(0,1000000).'.json?x='.$value['lon'].'&y='.$value['lat'].'&inSR='.$value['wkid'].'&outSR=4326';
+  $url = 'https://fishandgame.idaho.gov/ifwis/core/tools/reproject/'.rand(0,1000000).'.json?x='.$value['lon_x'].'&y='.$value['lat_y'].'&inSR='.$value['wkid'].'&outSR=4326';
   $json = drupal_http_request($url);
   if ($json->code != 200) {
     drupal_set_message(t('HTTP error @errorcode occurred when trying to query @remote.', array('@errorcode' => $json->code, '@remote' => $url)), 'error');
@@ -87,7 +87,7 @@ function _migrate_upload_lu_wkid($value) {
     102670 => 'stateplane idaho west fips 1103 nad 1983',
     3857 => 'web mercator wgs 1984 auxiliary sphere',
   );
-  $wkid = array_search($coordsys, $haystack);
+  $wkid = array_search($value, $haystack);
   if (!$wkid) { $wkid = 4326; } // If null, assume WGS84 DD.
   return $wkid;
 }

@@ -14,14 +14,14 @@ class nestMigration extends Migration {
       4 => array('E-mail Address', 'field_email'),
       // TODO need to use this info to reference or create an Observer nid for field_observer.
       5 => array('Survey Type', 'field_survey_method'),
-      6 => array('Species Common Name', 'field_species'); 
+      6 => array('Species Common Name', 'field_species'),
       // TODO author lookup to find Species nid from common name.
       7 => array('Site Name', 'survey_site.field_survey_site_name'),
-      8 => array('Territory', 'survey_site.field_study_area'); 
-      9 => array('NestID', 'survey_site.field_xid'
+      8 => array('Territory', 'survey_site.field_study_area'),
+      9 => array('NestID', 'survey_site.field_xid'),
       // TODO lookup siteid by title [node:field_survey_site_name] - [node:field_study_area] OR [node:field_xid] 
       // if no matches found we need to have way to archive what was submitted, leave null and flag.
-      10 => array('Date', 'field_datetime partial day.'),
+      10 => array('Date', 'field_datetime partial day'),
       11 => array('SurvStart_Time', 'field_datetime partial start time'),
       12 => array('SurvEnd_Time', 'field_datetime partial end time'), // field_datetime calc'd in prepareRow.
       13 => array('Observation Type', 'field_observation_method'), // Calculated from lookup function.
@@ -46,7 +46,7 @@ class nestMigration extends Migration {
       // Pass to webservice to calculate field_location in prepareRow below.
       
       29 => array('Location Confidence', 'field_location_confidence'), // Lookup values below.
-      30 => array('LocComment', 'field_location_comment'),
+      30 => array('LocComment', 'field_location_comment'), 
       31 => array('Site Directions', 'field_directions'),  // TODO archive survey_site name, territory and nestid here as well.
       32 => array('Land Manager', 'field_landowner'), // TODO may need to Lookup
 	    
@@ -69,7 +69,7 @@ class nestMigration extends Migration {
     $this->description = t('Import Nest observations');
 
     //The Source of the import, where the original data lives.  Upload to observations-import and copy location. (Right-click copy link location)
-    $this->source = new MigrateSourceCSV(DRUPAL_ROOT . '/sites/default/files/data-import/files/2014/12/nest.csv', $columns, array(
+    $this->source = new MigrateSourceCSV(DRUPAL_ROOT . '/' . drupal_get_path('module', 'migrate_upload') . '/examples/TW_2013_GOEA_Owyhee--with_Notes.csv', $columns, array(
       'delimiter' => ',',
       'header_rows' => 1
     ));
@@ -123,15 +123,14 @@ class nestMigration extends Migration {
     $this->addFieldMapping('field_location:lon', 'calc_lon');
     $this->addFieldMapping('field_location_confidence', 'Location Confidence')
       ->defaultValue(1000);
-    $this->addFieldMapping('field_location_comment', 'LocComment');
-    $this->addFieldMapping('field_directions', 'Site Directions');
+    $this->addFieldMapping('field_directions', 'calc_Directions');
     $this->addFieldMapping('field_landowner', 'Land Manager');  // TODO may need lookup for this for other datasets.
     $this->addFieldMapping('field_nest_substrate', 'NestSub');
     $this->addFieldMapping('field_nest_substrate_height', 'SubHgt');
     $this->addFieldMapping('field_nest_substrate_aspect', 'SubAsp')
-      ->callbacks(array($this, 'lu_bearing')};
+      ->callbacks(array($this, 'lu_bearing'));
     $this->addFieldMapping('field_nest_aspect', 'NestAsp')
-      ->callbacks(array($this, 'lu_bearing')};
+      ->callbacks(array($this, 'lu_bearing'));
     $this->addFieldMapping('field_nest_height', 'NestHgt');
     $this->addFieldMapping('field_nest_condition', 'NestCond');
     $this->addFieldMapping('field_ecological_system', 'EcolSysNest');
@@ -177,10 +176,11 @@ class nestMigration extends Migration {
       'wkid' => $wkid,
     );
     // Transform points if different coordinate system.
-    $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments, row->{'Coordinate System'}); 
+    $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
-    $row->calc_location_steps = '''Transformed Location'' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
+    //TODO $row->calc_location_steps = '''Transformed Location'' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
+   $row->calc_location_steps = '';
    
     // These are calculated here rather than as callbacks because value used for other fields.   
     $row->calc_nest_status = lu_site_status($row->{'Nest Status'});
@@ -190,11 +190,11 @@ class nestMigration extends Migration {
     if ($row->calc_territory_status == 'Unoccupied') {
       $row->calc_count = 0;
       $row->calc_count_type = 'Absolute';
-      $row->calc_life_state = 'Alive';
+      $row->calc_life_state = null;
     } else {
       $row->calc_count = 1;
       $row->calc_count_type = 'Minimum';
-      $row->calc_life_state = null;
+      $row->calc_life_state = 'Alive';
     }
     
     // Observation Method.
@@ -204,7 +204,7 @@ class nestMigration extends Migration {
       $row->calc_observation_method .= ',Photographed';
     }
 
-    $row->fixed_life_stage = 'Unknown', // I believe there is not enough information in territory occupancy fields to determine.
+    $row->fixed_life_stage = 'Unknown'; // I believe there is not enough information in territory occupancy fields to determine.
     
     // Location Use
     $nest = strpos($row->calc_observation_method, 'Nest');
@@ -212,9 +212,12 @@ class nestMigration extends Migration {
       $row->calc_location_use = 'Unknown';
     }
     else {
-      $row->calc_location_use = 'Breeding', // Fixed value since all nests.
+      $row->calc_location_use = 'Breeding'; // Fixed value since all nests.
     }
     
+    $directions = trim($row->{'Site Directions'} . '\n\r' . $row->LocComment, ' \t\n\r');
+    $row->calc_Directions = trim($directions . '\n\rSite Name: ' . $row->{'Site Name'} . '\n\rTerritory: ' . $row->{'Territory'} . '\n\rNestID: ' . $row->NestID, ' \t\n\r');
+
     $row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
     
     $row->calc_sa_code = 'UNK'; // TODO JOSH Somehow calc based on upload.
@@ -356,7 +359,7 @@ class nestMigration extends Migration {
     elseif (substr($value,0,12) == 'undetermined') {
       $return = 'Undetermined';
     }
-    if (!$return) { $return = $value; }
+    if (!$return) { $return = null; }
     return $return;
   }
   

@@ -12,57 +12,50 @@ class nestMigration extends Migration {
       2 => array('Title', 'field_position'),
       3 => array('Affiliation', 'field_organization'),
       4 => array('E-mail Address', 'field_email'),
-      // TODO need to use this info to reference or create an Observer nid for field_observer.
       5 => array('Survey Type', 'field_survey_method'),
       6 => array('Species Common Name', 'field_species'),
-      // TODO author lookup to find Species nid from common name.
-      7 => array('Site Name', 'survey_site.field_survey_site_name'),
-      8 => array('Territory', 'survey_site.field_study_area'),
-      9 => array('NestID', 'survey_site.field_xid'),
-      // TODO lookup siteid by title [node:field_survey_site_name] - [node:field_study_area] OR [node:field_xid] 
-      // if no matches found we need to have way to archive what was submitted, leave null and flag.
-      10 => array('Date', 'field_datetime partial day'),
-      11 => array('SurvStart_Time', 'field_datetime partial start time'),
-      12 => array('SurvEnd_Time', 'field_datetime partial end time'), // field_datetime calc'd in prepareRow.
-      13 => array('Observation Type', 'field_observation_method'), // Calculated from lookup function.
-      14 => array('Nest Status', 'field_site_status'),
-      15 => array('Territory Status', 'field_territory_status'),
-      16 => array('No adults or field sign', 'field_territory_occupancy partial'),
-      17 => array('Decorated nest', 'field_territory_occupancy partial'),
-      18 => array('Nest affinity', 'field_territory_occupancy partial'),
-      19 => array('Courtship or reproductive behavior', 'field_territory_occupancy partial'),
-      20 => array('Incubating posture', 'field_territory_occupancy partial'),
-      21 => array('Eggs observed', 'field_territory_occupancy partial'),
-      22 => array('Young observed', 'field_territory_occupancy partial'),
-      23 => array('Fledged young nearby', 'field_territory_occupancy partial'),
-      24 => array('Territory Occupancy Other', 'field_territory_occupancy partial'),
-      // TODO if each of above is not null then insert to value for field_territory_occupancy.
-      // For example if 19, 20 then "Courtship or reproductive behavior, Incubating posture"
-      25 => array('Sex', 'Gender'),
+      7 => array('Species Confidence', 'field_species_confidence'),
+      8 => array('Site Name', 'survey_site.field_survey_site_name'),
+      9 => array('Territory', 'survey_site.field_study_area'),
       
-      26 => array('Northing (Latitude)', 'field_location Y partial'),
-      27 => array('Easting (Longitude)', 'field_location X partial'),
-      28 => array('Coordinate System', 'field_location CoordSys partial'),
-      // Pass to webservice to calculate field_location in prepareRow below.
+      10 => array('NestID', 'survey_site.field_xid'),
+      11 => array('Date', 'field_datetime partial day'),
+      12 => array('SurvStart_Time', 'field_datetime partial start time'),
+      13 => array('SurvEnd_Time', 'field_datetime partial end time'),
+      14 => array('Observation Type', 'field_observation_method'),
+      15 => array('Nest Status', 'field_site_status'),
+      16 => array('Territory Status', 'field_territory_status'),
+      17 => array('No adults or field sign', 'field_territory_occupancy partial'),
+      18 => array('Decorated nest', 'field_territory_occupancy partial'),
+      19 => array('Nest affinity', 'field_territory_occupancy partial'),
       
-      29 => array('Location Confidence', 'field_location_confidence'), // Lookup values below.
-      30 => array('LocComment', 'field_location_comment'), 
-      31 => array('Site Directions', 'field_directions'),  // TODO archive survey_site name, territory and nestid here as well.
-      32 => array('Land Manager', 'field_landowner'), // TODO may need to Lookup
-	    
-      33 => array('NestSub', 'field_nest_substrate'),
-      34 => array('SubHgt', 'field_nest_substrate'),
-      35 => array('SubAsp', 'field_nest_substrate'),
-      36 => array('NestAsp', 'field_nest_substrate'),
-      37 => array('NestHgt', 'field_nest_substrate'),
-      38 => array('NestCond', 'field_nest_substrate'),
-      39 => array('EcolSysNest', 'field_nest_substrate'),
-      40 => array('EcolSysAdj', 'field_nest_substrate'),
+      20 => array('Courtship or reproductive behavior', 'field_territory_occupancy partial'),
+      21 => array('Incubating posture', 'field_territory_occupancy partial'),
+      22 => array('Eggs observed', 'field_territory_occupancy partial'),
+      23 => array('Young observed', 'field_territory_occupancy partial'),
+      24 => array('Fledged young nearby', 'field_territory_occupancy partial'),
+      25 => array('Territory Occupancy Other', 'field_territory_occupancy partial'),
+      26 => array('Sex', 'field_sex'),
+      27 => array('Northing (Latitude)', 'field_location Y partial'),
+      28 => array('Easting (Longitude)', 'field_location X partial'),
+      29 => array('Coordinate System', 'field_location CoordSys partial'),
+      30 => array('Location Confidence', 'field_location_confidence'),
       
-      41 => array('Photos', 'field_observation_method partial'), // TODO if not null append to field_observation_method values
-      42 => array('Comments', 'field_species_account'),
+      31 => array('LocComment', 'field_location_comment'), 
+      32 => array('Site Directions', 'field_directions'),
+      33 => array('Land Manager', 'field_landowner'),	    
+      34 => array('NestSub', 'field_nest_substrate'),
+      35 => array('SubHgt', 'field_nest_substrate'),
+      36 => array('SubAsp', 'field_nest_substrate'),
+      37 => array('NestAsp', 'field_nest_substrate'),
+      38 => array('NestHgt', 'field_nest_substrate'),
+      39 => array('NestCond', 'field_nest_substrate'),
+      40 => array('EcolSysNest', 'field_nest_substrate'),
       
-
+      41 => array('EcolSysAdj', 'field_nest_substrate'),
+      42 => array('Photos', 'field_observation_method partial'),
+      43 => array('Comments', 'field_species_account'),
+      44 => array('RecordID', 'field_xid, also MigrateSQLMap PK'),  // TODO Need to find way to populate from RowID
     );
     
     // Human-friendly description of your migration process. 
@@ -75,7 +68,7 @@ class nestMigration extends Migration {
     ));
 
 	  //The destination bundle (content type machine name)
-    $this->destination = new MigrateDestinationNode('observation');
+    $this->destination = new MigrateDestinationNode('observation_nest_survey');
 	
     //Source and destination relation for rollbacks
     $this->map = new MigrateSQLMap(
@@ -92,7 +85,7 @@ class nestMigration extends Migration {
     );
 
     //Field mapping
-    $this->addFieldMapping('field_xid', 'calc_xid');  // TODO Calculate using spreadsheet name and rowid?
+    $this->addFieldMapping('field_xid', 'RecordID');  // TODO Calculate using spreadsheet name and rowid?
     $this->addFieldMapping('field_observer', 'calc_observer_ID');  // TODO Calculate using function described in flowchart
     $this->addFieldMapping('field_full_name:given', 'Observer First Name');
     $this->addFieldMapping('field_full_name:family', 'Observer Last Name');
@@ -113,6 +106,7 @@ class nestMigration extends Migration {
     $this->addFieldMapping('field_territory_status', 'calc_territory_status');
     $this->addFieldMapping('field_territory_occupancy', 'calc_territory_occupancy')
       ->separator(','); // TODO calc from Territory Occupancy nine fields.
+      // For example if 19, 20 then "Courtship or reproductive behavior, Incubating posture"
     $this->addFieldMapping('field_sex', 'Sex')
       ->callbacks(array($this, 'lu_sex'));
     $this->addFieldMapping('field_location')
@@ -122,8 +116,8 @@ class nestMigration extends Migration {
     $this->addFieldMapping('field_location:lat', 'calc_lat');
     $this->addFieldMapping('field_location:lon', 'calc_lon');
     $this->addFieldMapping('field_location_confidence', 'Location Confidence')
-      ->defaultValue(1000);
-    $this->addFieldMapping('field_directions', 'calc_Directions');
+      ->callbacks(array($this, 'lu_location_confidence'));
+    $this->addFieldMapping('field_directions', 'calc_directions');
     $this->addFieldMapping('field_landowner', 'Land Manager');  // TODO may need lookup for this for other datasets.
     $this->addFieldMapping('field_nest_substrate', 'NestSub');
     $this->addFieldMapping('field_nest_substrate_height', 'SubHgt');
@@ -176,14 +170,14 @@ class nestMigration extends Migration {
       'wkid' => $wkid,
     );
     // Transform points if different coordinate system.
-    $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
+    //$geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
     $row->calc_location_steps = '\'Transformed Location\' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
    
     // These are calculated here rather than as callbacks because value used for other fields.   
-    $row->calc_nest_status = lu_site_status($row->{'Nest Status'});
-    $row->calc_territory_status = lu_site_status($row->{'Territory Status'});
+    $row->calc_nest_status = $this->lu_site_status($row->{'Nest Status'});
+    $row->calc_territory_status = $this->lu_site_status($row->{'Territory Status'});
 
     // Based on territory status we decide count.
     if ($row->calc_territory_status == 'Unoccupied') {
@@ -197,7 +191,7 @@ class nestMigration extends Migration {
     }
     
     // Observation Method.
-    $row->calc_observation_method = lu_observation_method($row->{'Observation Type'}, $row->{'Nest Status'}, $row->Photos);
+    $row->calc_observation_method = $this->lu_observation_method($row->{'Observation Type'}, $row->{'Nest Status'}, $row->Photos);
     // Are there photos?
     if ($row->Photos) {
       $row->calc_observation_method .= ',Photographed';
@@ -215,19 +209,19 @@ class nestMigration extends Migration {
     }
     
     $directions = trim($row->{'Site Directions'} . '\n\r' . $row->LocComment, ' \t\n\r');
-    $row->calc_Directions = trim($directions . '\n\rSite Name: ' . $row->{'Site Name'} . '\n\rTerritory: ' . $row->{'Territory'} . '\n\rNestID: ' . $row->NestID, ' \t\n\r');
+    $row->calc_directions = trim($directions . '\n\rSite Name: ' . $row->{'Site Name'} . '\n\rTerritory: ' . $row->{'Territory'} . '\n\rNestID: ' . $row->NestID, ' \t\n\r');
 
     $row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
-        $row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
+    $row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
     
     $row->calc_sa_code = 'UNK'; // TODO JOSH Somehow calc based on upload.
-    $row->calc_record_ID = 0; // TODO JOSH Somehow calc based on upload row id and spreadsheet, possibly add SA Code 
+    //$row->calc_record_ID = 0; // TODO JOSH Somehow calc based on upload row id and spreadsheet, possibly add SA Code 
     $row->calc_uid = 1486;  // TODO JOSH Somehow calc from upload.
     /*
     // Do we need the following?
       17 => array('Museum', 'Museum code'),  // Remove from schema?
       18 => array('Specimen Number', 'Specimen'),  // Remove from schema?
-      30 => array('Do Not Share?', 'Sensitive'),  // Do we need to add this field?
+      30 => array('Do Not Share?', 'Sensitive'),  // TODO If on private ground indicate unless new consent column (TODO) is checked.
     */
   }
 
@@ -297,11 +291,11 @@ class nestMigration extends Migration {
   // Lookup Location Precision Values.
   protected function lu_location_confidence($value) {
     $haystack = array (
-      10 => 'Precise (within 10m/11ft)',
-      50 => 'Accurate (within 50m/55yrd)',
-      250 => 'Moderate Precision (within 250m/273yd)',
-      1000 => 'Estimated Precision (< 1km/0.6mi)',
-      10000 => 'Low Precision (> 1km/0.6mi)',
+      10 => 'Precise',
+      50 => 'Accurate',
+      250 => 'Moderate Precision',
+      1000 => 'Estimated Precision',
+      10000 => 'Low Precision',
     );
     $return = array_search($value, $haystack);
     if (!$return) { $return = 10000; }
@@ -349,6 +343,7 @@ class nestMigration extends Migration {
   // Lookup Nest Status and Territory Status Values.
   protected function lu_site_status($value) {
     $value = strtolower($value);
+    $return = null;
     if (substr($value,0,8) == 'occupied') {
       $return = 'Occupied';
     }
@@ -358,7 +353,6 @@ class nestMigration extends Migration {
     elseif (substr($value,0,12) == 'undetermined') {
       $return = 'Undetermined';
     }
-    if (!$return) { $return = null; }
     return $return;
   }
   
@@ -384,7 +378,7 @@ class nestMigration extends Migration {
       270 => 'w',
       315 => 'nw',
     );
-    $abbreviations = array (
+    $names = array (
       0 => 'north',
       45 => 'northeast',
       90 => 'east',

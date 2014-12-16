@@ -170,7 +170,7 @@ class nestMigration extends Migration {
       'wkid' => $wkid,
     );
     // Transform points if different coordinate system.
-    //$geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
+    //$geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);  // TODO check on this.
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
     $row->calc_location_steps = '\'Transformed Location\' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
@@ -211,12 +211,12 @@ class nestMigration extends Migration {
     $directions = trim($row->{'Site Directions'} . '\n\r' . $row->LocComment, ' \t\n\r');
     $row->calc_directions = trim($directions . '\n\rSite Name: ' . $row->{'Site Name'} . '\n\rTerritory: ' . $row->{'Territory'} . '\n\rNestID: ' . $row->NestID, ' \t\n\r');
 
-    $row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
-    $row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
+    //$row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
+    //$row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
     
-    $row->calc_sa_code = 'UNK'; // TODO JOSH Somehow calc based on upload.
+    // $row->calc_sa_code = 'UNK'; // TODO JOSH Somehow calc based on upload.
     //$row->calc_record_ID = 0; // TODO JOSH Somehow calc based on upload row id and spreadsheet, possibly add SA Code 
-    $row->calc_uid = 1486;  // TODO JOSH Somehow calc from upload.
+    $row->calc_uid = 1;  // TODO JOSH Somehow calc from upload.
     /*
     // Do we need the following?
       17 => array('Museum', 'Museum code'),  // Remove from schema?
@@ -289,6 +289,7 @@ class nestMigration extends Migration {
   }
 
   // Lookup Location Precision Values.
+  // TODO we may need to add in other options like Precise (less than 10 meters).
   protected function lu_location_confidence($value) {
     $haystack = array (
       10 => 'Precise',

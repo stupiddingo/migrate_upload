@@ -74,7 +74,7 @@ class nestMigration extends Migration {
     $this->map = new MigrateSQLMap(
       $this->machineName,
       array(
-        'RecordID' => array(
+        'csvrownum' => array(
           'type' => 'int',
           'unsigned' => TRUE,
           'not null' => TRUE,
@@ -85,7 +85,7 @@ class nestMigration extends Migration {
     );
 
     //Field mapping
-    $this->addFieldMapping('field_xid', 'RecordID');  // TODO Calculate using spreadsheet name and rowid?
+    $this->addFieldMapping('field_xid', 'csvrownum');  // TODO Should we add spreadsheet name/sa code?  What if RecordID provided?
     $this->addFieldMapping('field_observer', 'calc_observer_ID');  // TODO Calculate using function described in flowchart
     $this->addFieldMapping('field_full_name:given', 'Observer First Name');
     $this->addFieldMapping('field_full_name:family', 'Observer Last Name');
@@ -99,7 +99,9 @@ class nestMigration extends Migration {
       ->callbacks(array($this, 'lu_species_confidence'));
     $this->addFieldMapping('field_survey_site', 'NestID')
       ->callbacks(array($this, 'lu_survey_site'));
-    $this->addFieldMapping('field_datetime','calc_observation_date');
+    $this->addFieldMapping('field_datetime', 'calc_datetime_from');
+    $this->addFieldMapping('field_datetime:to', 'calc_datetime_to');
+    $this->addFieldMapping('field_datetime:timezone', 'calc_datetime_timezone');
     $this->addFieldMapping('field_observation_method', 'calc_observation_method')
     	->separator(',');
     $this->addFieldMapping('field_site_status', 'calc_nest_status');
@@ -130,8 +132,8 @@ class nestMigration extends Migration {
     $this->addFieldMapping('field_ecological_system', 'EcolSysNest');
     $this->addFieldMapping('field_ecological_systems', 'EcolSysAdj'); // Really they are named singular and plural of system.
     $this->addFieldMapping('field_species_account', 'Comments');
-    
-    $this->addFieldMapping('field_location_steps', 'calc_location_steps');  
+    $this->addFieldMapping('field_location_resource', 'calc_location_resource');
+    $this->addFieldMapping('field_location_steps', 'calc_location_steps');
     $this->addFieldMapping('field_count', 'calc_count'); 
     $this->addFieldMapping('field_count_type', 'calc_count_type');
     $this->addFieldMapping('field_life_state', 'calc_life_state');
@@ -147,19 +149,18 @@ class nestMigration extends Migration {
     // Calculate Start/End Date time and Date Confidence.
     if ($row->SurvStart_Time && $row->SurvEnd_Time) {
       $row->calc_date_confidence = 3600; // Hour
-      $startdate = new DateTime($row->{'Date'} . ' ' . trim($row->SurvStart_Time), new DateTimeZone('America/Boise'));
-      $enddate = new DateTime($row->{'Date'} . ' ' . trim($row->SurvEnd_Time), new DateTimeZone('America/Boise'));
+      $startdate = $row->{'Date'} . ' ' . trim($row->SurvStart_Time);
+      $enddate = $row->{'Date'} . ' ' . trim($row->SurvEnd_Time);
     } else {
       $row->calc_date_confidence = 86400;  // Day
-      $startdate = new DateTime($row->{'Date'}, new DateTimeZone('America/Boise'));
-      $enddate = new DateTime($row->{'Date'}, new DateTimeZone('America/Boise'));
+      $startdate = $row->{'Date'} . ' 00:00:00';
+      $enddate = $row->{'Date'} . ' 00:00:00';
     }
-    $date_data = array(
-      'from' => (string) $startdate->format("U"),
-      'to' => (string) $startdate->format("U"),
-    );
-    $row->calc_observation_date = drupal_json_encode($date_data);
+    $row->calc_datetime_from = $startdate;
+    $row->calc_datetime_to = $enddate;
+    $row->calc_datetime_timezone = 'America/Denver';
     // TODO we probably need to add timezone to the spreadsheet or calculate based on location (unreliable).
+    // TODO Here be dragons. No offset on import, requires resave.  Seems to work, but there may be surprises.
     
     // Calculate location.
     $wkid = _migrate_upload_lu_wkid($row->{'Coordinate System'});
@@ -170,10 +171,11 @@ class nestMigration extends Migration {
       'wkid' => $wkid,
     );
     // Transform points if different coordinate system.
-    //$geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);  // TODO check on this.
+    $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
     $row->calc_location_steps = '\'Transformed Location\' to ' . $row->calc_lat . ',' . $row->calc_lon . ' [Input, WKID: ' . $wkid . ', xvalue: ' . $row->{'Easting (Longitude)'} . ', yvalue:' . $row->{'Northing (Latitude)'} . '], [Accuracy: 10];';
+    $row->calc_location_resource = 'Transformed Location'; 
    
     // These are calculated here rather than as callbacks because value used for other fields.   
     $row->calc_nest_status = $this->lu_site_status($row->{'Nest Status'});
@@ -196,6 +198,7 @@ class nestMigration extends Migration {
     if ($row->Photos) {
       $row->calc_observation_method .= ',Photographed';
     }
+    dpm($row);
 
     $row->fixed_life_stage = 'Unknown'; // I believe there is not enough information in territory occupancy fields to determine.
     
@@ -208,8 +211,8 @@ class nestMigration extends Migration {
       $row->calc_location_use = 'Breeding'; // Fixed value since all nests.
     }
     
-    $directions = trim($row->{'Site Directions'} . '\n\r' . $row->LocComment, ' \t\n\r');
-    $row->calc_directions = trim($directions . '\n\rSite Name: ' . $row->{'Site Name'} . '\n\rTerritory: ' . $row->{'Territory'} . '\n\rNestID: ' . $row->NestID, ' \t\n\r');
+    $directions = trim($row->{'Site Directions'} . PHP_EOL . $row->LocComment, ' \t\n\r');
+    $row->calc_directions = trim($directions . PHP_EOL . 'Site Name: ' . $row->{'Site Name'} . PHP_EOL . 'Territory: ' . $row->{'Territory'} . PHP_EOL . 'NestID: ' . $row->NestID, ' \t\n\r');
 
     //$row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
     //$row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
@@ -318,27 +321,30 @@ class nestMigration extends Migration {
   }
   
   // Lookup Observation Method.
-  protected function lu_observation_method($observation_type, $nest_status) {
+  protected function lu_observation_method($observation_type, $nest_status, $photos) {
     $observation_type = strtolower($observation_type);
     if (substr($observation_type,0,4) == 'nest') {
       if ($nest_status == 'Occupied') {
-        $return = 'Nest,Seen';
+        $value = 'Nest,Seen';
       } else {
-        $return = 'Nest';
+        $value = 'Nest';
       }
     }
     elseif (substr($observation_type,0,8) == 'negative') {
-      $return = 'Negative';
+      $value = 'Negative';
     }
     elseif (substr($observation_type,0,25) == 'individual seen and heard') {
-      $return = 'Seen,Heard';
+      $value = 'Seen,Heard';
     } 
     elseif (substr($observation_type,0,15) == 'individual seen') {
-      $return = 'Seen,Heard';
+      $value = 'Seen,Heard';
     }
     elseif (substr($observation_type,0,16) == 'individual heard') {
-      $return = 'Seen,Heard';
+      $value = 'Seen,Heard';
+    } else {
+      $value = 'Unknown';
     }
+    return $value;
   }
   
   // Lookup Nest Status and Territory Status Values.

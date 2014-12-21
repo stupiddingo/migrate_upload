@@ -45,13 +45,9 @@ function _migrate_upload_lu_location_wgs($value) {
     $geocode_results = drupal_json_decode($json->data);
     if (isset($geocode_results['response'])) {
       if ($geocode_results['response'] == 'success') {
-        $lat = $geocode_results['outy'];
-        $lon = $geocode_results['outx'];
-        $input_format = $value['input_format'];
         $value = array(
-          'lat' => $lat,
-          'lon' => $lon,
-          'input_format' => $input_format,
+          'lat_y' => $geocode_results['outy'],
+          'lon_x' => $geocode_results['outx'],
         );
       }
       else {
@@ -59,7 +55,7 @@ function _migrate_upload_lu_location_wgs($value) {
       }
     }
     else {
-      drupal_set_message(t('Geocoding service reached, no error code returned, but no response returned for @remote.', array('@remote' => $url)), 'error');
+      drupal_set_message(t('Geocoding service reached, no error code returned, no response returned for @remote.', array('@remote' => $url)), 'error');
     }
   }
   return $value;

@@ -1,7 +1,7 @@
 name = "Migrate Upload"
 description = "Imports Uploads using Migrate."
 dependencies[] = migrate
-dependencies[] = views // Required or addressfield throws 'views_handler_field' not found.
+dependencies[] = views
 package = Development
 core = 7.x
 files[] = migrate_upload.install

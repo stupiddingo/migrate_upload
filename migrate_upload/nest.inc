@@ -86,7 +86,7 @@ class nestMigration extends Migration {
 
     //Field mapping
     $this->addFieldMapping('field_xid', 'csvrownum');  // TODO Should we add spreadsheet name/sa code?  What if RecordID provided?
-    $this->addFieldMapping('field_observer', 'calc_observer_ID');  // TODO Calculate using function described in flowchart
+    $this->addFieldMapping('field_observer', 'calc_observer_ID');
     $this->addFieldMapping('field_full_name:given', 'Observer First Name');
     $this->addFieldMapping('field_full_name:family', 'Observer Last Name');
     $this->addFieldMapping('field_position', 'Title');
@@ -202,7 +202,7 @@ class nestMigration extends Migration {
     if ($row->Photos) {
       $row->calc_observation_method .= ',Photographed';
     }
-    dpm($row);
+
 
     $row->fixed_life_stage = 'Unknown'; // I believe there is not enough information in territory occupancy fields to determine.
     
@@ -242,7 +242,7 @@ class nestMigration extends Migration {
       );
     $row->calc_observer_ID = _migrate_upload_lu_person($row->calc_uid, $person);
     $row->calc_survey_site_ID = _migrate_upload_lu_survey_site_by_xid($row->NestID);
-
+    //dpm($row);
   }
 
   // Convert strings to integers.

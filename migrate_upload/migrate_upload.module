@@ -142,11 +142,11 @@ function _migrate_upload_lu_survey_site_by_xid($value) {
  * TODO The way we use sticky to store primary person could lead to trouble.
  */
 function _migrate_upload_lu_person($uid, $person) {
-  // See if thre is a primary person with this email. Should be only one match.
+  // See if there is a primary person with this email. Should be only one match.
   $primary_person_nid = db_query('SELECT nid  FROM {node} person
     INNER JOIN {field_data_field_email} email ON ( person.vid = email.revision_id )
     WHERE person.status = 1 AND person.sticky = 1 AND person.type = \'person\'
-    AND email.field_email_email == :email', array(':email' => $person['email']))->fetchField();
+    AND email.field_email_email = :email', array(':email' => $person['email']))->fetchField();
 
   // We are not checking if this is user's person or not, this could cause issues.
   if ($primary_person_nid) {
@@ -165,50 +165,55 @@ function _migrate_upload_lu_person($uid, $person) {
    */
 
   // Retrieve list of user's persons.
-  $user_persons = db_query('SELECT nid, field_email_email, field_full_name_given, field_full_name_family, field_organization, field_position  FROM {node} person
+  $user_persons = db_query('SELECT nid, field_email_email, field_full_name_given,
+    field_full_name_family, field_organization_value, field_position_value, field_phone_value
+    FROM {node} person
     INNER JOIN {field_data_field_email} email ON ( person.vid = email.revision_id )
     INNER JOIN {field_data_field_full_name} full_name ON ( person.vid = full_name.revision_id )
     LEFT OUTER JOIN {field_data_field_organization} organization ON ( person.vid = organization.revision_id)
     LEFT OUTER JOIN {field_data_field_position} position ON ( person.vid = position.revision_id)
     LEFT OUTER JOIN {field_data_field_phone} phone ON ( person.vid = phone.revision_id)
-    WHERE person.status = 1 AND person.sticky = 1 AND person.type = \'person\'
-    AND person.uid = :uid AND email.field_data_field_email == :email', array(':uid' => $uid, ':email' => $person['email']));
+    WHERE person.status = 1 AND person.sticky = 0 AND person.type = \'person\'
+    AND person.uid = :uid', array(':uid' => $uid));
 
   // Calculate a matching score using parts of the provided person's identity.
   // If high enough match return.
   $score = array();
   foreach ($user_persons as $user_person) {
-    $score[$person->nid] = 0;
+    $score[$user_person->nid] = 0;
     // If email matches score 10.
     if ($user_person->field_email_email == $person['email']) {
-      $score[$person->nid] += 10;
+      $score[$user_person->nid] += 10;
     }
     // If last name matches score 5.
     if ($user_person->field_full_name_family == $person['family']) {
-      $score[$person->nid] += 5;
+      $score[$user_person->nid] += 5;
     }
     // If first name matches score 4.
     if ($user_person->field_full_name_given == $person['given']) {
-      $score[$person->nid] += 4;
+      $score[$user_person->nid] += 4;
     }
     // If position matches score 3.
-    if ($user_person->field_position == $person['position']) {
-      $score[$person->nid] += 3;
+    if ($user_person->field_position_value == $person['position']) {
+      $score[$user_person->nid] += 3;
     }
     // If position matches score 2.
-    if ($user_person->field_organization == $person['organization']) {
-      $score[$person->nid] += 2;
+    if ($user_person->field_organization_value == $person['organization']) {
+      $score[$user_person->nid] += 2;
     }
     // If phone matches score 1.
-    if ($user_person->field_phone == $person['phone']) {
-      $score[$person->nid] += 1;
+    if ($user_person->field_phone_value == $person['phone']) {
+      $score[$user_person->nid] += 1;
     }
   }
   // If total score more than 10 accept as the correct person.
-  $max_score = max($score);
-  if ($max_score > 10) {
-    return array_search($max_score, $score);
+  if ($score) {
+    $max_score = max($score);
+    if ($max_score > 10) {
+      return array_search($max_score, $score);
+    }
   }
+
   // Create new User Person.
   $new_person_nid = _migrate_upload_person_add($uid, $person, false);
   if ($new_person_nid) {
@@ -223,38 +228,20 @@ function _migrate_upload_lu_person($uid, $person) {
  * Create a new person.
  */
 function _migrate_upload_person_add( $uid, $person, $sticky = false ) {
-  module_load_include('inc', 'node', 'node.pages');
-
-  $node_person = (object) array(
-    'type' => 'person',
-    'language' => LANGUAGE_NONE
-  );
+  $node_person = new stdClass();
+  $node_person->type = "person";
   node_object_prepare($node_person);
+  $node_person->uid = $uid;
+  $node_person->sticky = $sticky;
+  $node_person->promote = 0;
+  $node_person->language = LANGUAGE_NONE;
+  $node_person->field_full_name[$node_person->language][0]['given'] = $person['given'];
+  $node_person->field_full_name[$node_person->language][0]['family'] = $person['family'];
+  $node_person->field_organization[$node_person->language][0]['value'] = $person['organization'];
+  $node_person->field_position[$node_person->language][0]['value'] = $person['position'];
+  $node_person->field_email[$node_person->language][0]['email'] = $person['email'];
+  $node_person->field_phone[$node_person->language][0]['value'] = $person['phone'];
 
-  $form_state = array();
-  $form_state['values']['op'] = t('Save');
-  $form_state['values']['name'] = db_result(db_query("SELECT name FROM {users} WHERE uid = '%s'", $uid));
-  $form_state['values']['sticky'] = $sticky;
-
-  $form_state['values']['field_full_name']['und'][0]['given'] = $person['given'];
-  $form_state['values']['field_full_name']['und'][0]['family'] = $person['family'];
-  $form_state['values']['field_organization']['und'][0]['value'] = $person['organization'];
-  $form_state['values']['field_position']['und'][0]['value'] = $person['position'];
-  $form_state['values']['field_email']['und'][0]['email'] = $person['email'];
-  $form_state['values']['field_phone']['und'][0]['value'] = $person['phone'];
-  // TODO Add About (Background) and Postal Address fields?
-
-  drupal_form_submit('person_node_form', $form_state, $node_person);
-
-  // Return nid of new person or zero if creation failed.
-  if (form_get_errors()) {
-    // Log errors return 0.
-    watchdog('migrate_upload', 'Person creation failed for uid %uid on %given %family.',
-      array('%uid' => $uid, '%given' => $person["given"], '%family' => $person["family"]), WATCHDOG_ERROR, $link = NULL);
-    return 0;
-  } else {
-    // clear status messages to remove new person notification.
-    drupal_get_messages('status');
-    return $node_person->nid;
-  }
+  node_save($node_person);
+  return($node_person->nid);
 }

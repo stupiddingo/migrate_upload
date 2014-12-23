@@ -141,6 +141,7 @@ class nestMigration extends Migration {
     $this->addFieldMapping('field_location_use', 'calc_location_use');
     $this->addFieldMapping('field_date_confidence', 'calc_date_confidence');
     $this->addFieldMapping('field_sacode','calc_sa_code');
+    $this->addFieldMapping('field_sensitive','calc_sensitive');
     $this->addFieldMapping('uid','calc_uid');
   }
 
@@ -160,7 +161,9 @@ class nestMigration extends Migration {
     $row->calc_datetime_to = $enddate;
     $row->calc_datetime_timezone = 'America/Denver';
     // TODO we probably need to add timezone to the spreadsheet or calculate based on location (unreliable).
-    // TODO Here be dragons. No offset on import, requires resave.  Seems to work, but there may be surprises.
+    // Here be dragons. No offset on import, only timezone name.  Fix requires resave.  Ugly. Code fix needed.
+    // Another possibility is to gank timezone from user account (site uses timezone detect module and have
+    // some sort of verification on upload.
     
     // Calculate location.
     $wkid = _migrate_upload_lu_wkid($row->{'Coordinate System'});
@@ -171,6 +174,7 @@ class nestMigration extends Migration {
       'wkid' => $wkid,
     );
     // Transform points if different coordinate system.
+    // TODO needs research, not correctly saving.
     $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
@@ -214,18 +218,31 @@ class nestMigration extends Migration {
     $directions = trim($row->{'Site Directions'} . PHP_EOL . $row->LocComment, ' \t\n\r');
     $row->calc_directions = trim($directions . PHP_EOL . 'Site Name: ' . $row->{'Site Name'} . PHP_EOL . 'Territory: ' . $row->{'Territory'} . PHP_EOL . 'NestID: ' . $row->NestID, ' \t\n\r');
 
-    //$row->calc_survey_site_ID = null; // TODO Add Site lookup based on NestID, if no matches null.
-    //$row->calc_observer_ID = null; // TODO Calc ObserverID based on flowchart.
-    
-    // $row->calc_sa_code = 'UNK'; // TODO JOSH Somehow calc based on upload.
-    //$row->calc_record_ID = 0; // TODO JOSH Somehow calc based on upload row id and spreadsheet, possibly add SA Code 
-    $row->calc_uid = 1;  // TODO JOSH Somehow calc from upload.
-    /*
-    // Do we need the following?
-      17 => array('Museum', 'Museum code'),  // Remove from schema?
-      18 => array('Specimen Number', 'Specimen'),  // Remove from schema?
-      30 => array('Do Not Share?', 'Sensitive'),  // TODO If on private ground indicate unless new consent column (TODO) is checked.
-    */
+    /**
+      * The following need calculated from bibliography import.
+      */
+    // $row->calc_sa_code = 'UNK'; // TODO From biblio.
+    // $row->calc_record_ID = 0; // TODO From biblio.
+    $row->calc_uid = 1;  // TODO From biblio.
+
+    /**
+      * The following remain to be calculated from existing values.
+      */
+    // $row->calc_sensitive = 'Private'; // TODO if on private ground and NEW consent column unchecked.
+    // $row->calc_territory_occupancy = 'One|Two|Three'; // TODO calc from nine territory fields.
+
+    // Get Person Node.
+    $person = array(
+      'given' => $row->{'Observer First Name'},
+      'family' => $row->{'Observer Last Name'},
+      'position' => $row->{'Title'},
+      'organization' => $row->{'Affiliation'},
+      'email' => $row->{'E-mail Address'},
+      'phone' => null,
+      );
+    $row->calc_observer_ID = _migrate_upload_lu_person($row->calc_uid, $person);
+    $row->calc_survey_site_ID = _migrate_upload_lu_survey_site_by_xid($row->NestID);
+
   }
 
   // Convert strings to integers.

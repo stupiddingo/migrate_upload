@@ -55,7 +55,7 @@ class nestMigration extends Migration {
       41 => array('EcolSysAdj', 'field_nest_substrate'),
       42 => array('Photos', 'field_observation_method partial'),
       43 => array('Comments', 'field_species_account'),
-      44 => array('RecordID', 'field_xid, also MigrateSQLMap PK'),  // TODO Need to find way to populate from RowID
+      44 => array('RecordID', 'field_xid, also MigrateSQLMap PK'),
     );
     
     // Human-friendly description of your migration process. 
@@ -90,7 +90,8 @@ class nestMigration extends Migration {
     $this->addFieldMapping('field_full_name:given', 'Observer First Name');
     $this->addFieldMapping('field_full_name:family', 'Observer Last Name');
     $this->addFieldMapping('field_position', 'Title');
-    $this->addFieldMapping('field_organization', 'Affiliation');
+    $this->addFieldMapping('field_organization', 'Affiliation')
+      ->callbacks(array($this, 'lu_organization'));  // TODO add to person creation as well.
     $this->addFieldMapping('field_email', 'E-mail Address');
     $this->addFieldMapping('field_survey_method', 'Survey Type');
     $this->addFieldMapping('field_species', 'Species Common Name')
@@ -111,6 +112,7 @@ class nestMigration extends Migration {
       // For example if 19, 20 then "Courtship or reproductive behavior, Incubating posture"
     $this->addFieldMapping('field_sex', 'Sex')
       ->callbacks(array($this, 'lu_sex'));
+    // PATCH: Use of subfields requires drupal.org/node/1411836#17
     $this->addFieldMapping('field_location')
       ->defaultValue('');
     $this->addFieldMapping('field_location:input_format')
@@ -305,6 +307,52 @@ class nestMigration extends Migration {
     );
     $return = array_search($value, $haystack);
     if (!$return) { $return = 'Unknown'; }
+    return $return;
+  }
+
+  // Lookup for Organization.
+  protected function lu_organization($value) {
+    // Convert to lowercase.
+    $scrubbed = strtolower($value);
+
+    // Remove common words.
+    $ignore_words = array('a','and','dept','in','of','the');
+    $ignore_regex = '/\b('.implode('|', $ignore_words).')\b/';
+    $scrubbed = preg_replace($ignore_regex, '', $scrubbed);
+
+    // Replace all non-alpha with single space.
+    $scrubbed = preg_replace('/[^a-z]+/', ' ', $scrubbed);
+
+    // Build a barn of haystack synonyms.
+    // Alternatively, these could be stored in database and queried via SQL, however
+    //  this would require more parsing though, that would involve humans and in
+    //  code we understand the steps already taken to simplify comparisons above.
+    //  This also allows our aliases to be captured in version control to make
+    //  historical corrections.
+    // Order this list by likelihood to speed processing.
+    $hay_barn = array (
+      'IDFG' => array('idaho fish game', 'id fish game', 'idaho department fish game', 'ifg', 'id fg'),
+      'USFS' => array('united states forest service', 'forest service', 'usda fs', 'us fs', 'fs', 'department agriculture forest service', 'us department agriculture forest service'),
+      'BLM' => array('bureau land management', 'united states bureau of land management', 'us blm'),
+      'UFWS' => array('fish wildlife service', 'united states fish wildlife service', 'usfws', 'us fws')
+    );
+
+    // Loop through haystacks in barn, search for synonyms.
+    foreach($hay_barn as $hay_key => $hay_stack) {
+      // If matches key we're done here.
+      if ($scrubbed == strtolower($hay_key)) {
+        $return = $hay_key;
+        break;
+      }
+      // If matches alias in hay stack bail.
+      if (in_array($scrubbed, $hay_stack)) {
+        $return = $hay_key;
+        break;
+      }
+    }
+
+    // If no matches found, return entered value. This would be new organization.
+    if (!$return) { $return = $value; }
     return $return;
   }
 

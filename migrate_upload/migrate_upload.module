@@ -164,6 +164,9 @@ function _migrate_upload_lu_person($uid, $person) {
    *   TODO when this step in place remove email from scoring below.
    */
 
+  // TODO we could test by role here and pull back all people we have permissions
+  // or that are "IDFG" data manager people.
+
   // Retrieve list of user's persons.
   $user_persons = db_query('SELECT nid, field_email_email, field_full_name_given,
     field_full_name_family, field_organization_value, field_position_value, field_phone_value
@@ -181,28 +184,29 @@ function _migrate_upload_lu_person($uid, $person) {
   $score = array();
   foreach ($user_persons as $user_person) {
     $score[$user_person->nid] = 0;
+    
     // If email matches score 10.
-    if ($user_person->field_email_email == $person['email']) {
+    if (!empty($user_person->field_email_email) && $user_person->field_email_email == $person['email']) {
       $score[$user_person->nid] += 10;
     }
     // If last name matches score 5.
-    if ($user_person->field_full_name_family == $person['family']) {
+    if (!empty($user_person->field_full_name_family) && $user_person->field_full_name_family == $person['family']) {
       $score[$user_person->nid] += 5;
     }
     // If first name matches score 4.
-    if ($user_person->field_full_name_given == $person['given']) {
+    if (!empty($user_person->field_full_name_given) && $user_person->field_full_name_given == $person['given']) {
       $score[$user_person->nid] += 4;
     }
     // If position matches score 3.
-    if ($user_person->field_position_value == $person['position']) {
+    if (!empty($user_person->field_position_value) && $user_person->field_position_value == $person['position']) {
       $score[$user_person->nid] += 3;
     }
     // If position matches score 2.
-    if ($user_person->field_organization_value == $person['organization']) {
+    if (!empty($user_person->field_organization_value) && $user_person->field_organization_value == $person['organization']) {
       $score[$user_person->nid] += 2;
     }
     // If phone matches score 1.
-    if ($user_person->field_phone_value == $person['phone']) {
+    if (!empty($user_person->field_phone_value) && $user_person->field_phone_value == $person['phone']) {
       $score[$user_person->nid] += 1;
     }
   }

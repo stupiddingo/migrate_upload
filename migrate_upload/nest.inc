@@ -176,7 +176,7 @@ class nestMigration extends Migration {
       'wkid' => $wkid,
     );
     // Transform points if different coordinate system.
-    // TODO needs research, not correctly saving.
+    // REFACTOR add test to verify if valid WGS84DD and skip if valid.
     $geo_arguments = _migrate_upload_lu_location_wgs($geo_arguments);
     $row->calc_lat = $geo_arguments['lat_y'];
     $row->calc_lon = $geo_arguments['lon_x'];
@@ -323,7 +323,7 @@ class nestMigration extends Migration {
     // Replace all non-alpha with single space.
     $scrubbed = preg_replace('/[^a-z]+/', ' ', $scrubbed);
 
-    // Build a barn of haystack synonyms.
+    // Build a barn of synonym haystacks.
     // Alternatively, these could be stored in database and queried via SQL, however
     //  this would require more parsing though, that would involve humans and in
     //  code we understand the steps already taken to simplify comparisons above.
@@ -333,11 +333,11 @@ class nestMigration extends Migration {
     $hay_barn = array (
       'IDFG' => array('idaho fish game', 'id fish game', 'idaho department fish game', 'ifg', 'id fg'),
       'USFS' => array('united states forest service', 'forest service', 'usda fs', 'us fs', 'fs', 'department agriculture forest service', 'us department agriculture forest service'),
-      'BLM' => array('bureau land management', 'united states bureau of land management', 'us blm'),
+      'BLM' => array('bureau land management', 'united states bureau land management', 'us blm'),
       'UFWS' => array('fish wildlife service', 'united states fish wildlife service', 'usfws', 'us fws')
     );
 
-    // Loop through haystacks in barn, search for synonyms.
+    // Loop through synonym haystacks in barn, search for matches.
     foreach($hay_barn as $hay_key => $hay_stack) {
       // If matches key we're done here.
       if ($scrubbed == strtolower($hay_key)) {
@@ -351,9 +351,10 @@ class nestMigration extends Migration {
       }
     }
 
-    // If no matches found, return entered value. This would be new organization.
+    // If no matches found, return entered value. This would be a new organization not
+    //  currently in the lookup, e.g. Craig and Al’s Discount BioSurveys Inc.
     if (!$return) { $return = $value; }
-    return $return;
+      return $return;
   }
 
   // Lookup Location Precision Values.
